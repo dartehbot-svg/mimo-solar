@@ -389,9 +389,9 @@ async function main() {
     const app = express();
     app.use(express.json());
 
-    app.post('/webhook', async (req, res) => {
+    app.post('/webhook', async (req: express.Request, res: express.Response) => {
       try {
-        await bot.handleWebhook(req.body);
+        await (bot as any).handleUpdate(req.body);
         res.sendStatus(200);
       } catch (err: any) {
         console.error('Webhook ошибка:', err.message);
@@ -400,22 +400,15 @@ async function main() {
     });
 
     // Health-check для панели мониторинга
-    app.get('/api/health', (_req, res) => {
+    app.get('/api/health', (_req: express.Request, res: express.Response) => {
       res.json({ status: 'ok', mode: 'webhook' });
     });
 
     const port = parseInt(process.env.BOT_PORT || '8080');
     app.listen(port, () => {
       console.log(`Webhook-сервер запущен на порту ${port}`);
+      console.log(`Зарегистрируйте webhook URL в MAX: ${webhookUrl}`);
     });
-
-    // Регистрация webhook URL
-    try {
-      await bot.api.setWebhook(webhookUrl);
-      console.log(`Webhook зарегистрирован: ${webhookUrl}`);
-    } catch (err: any) {
-      console.error('Ошибка регистрации webhook:', err.message);
-    }
   } else {
     // Long Polling (разработка)
     console.log('Режим: Long Polling');
