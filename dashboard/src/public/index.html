@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Солярная карта — Панель управления</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+    .header { background: #1e293b; padding: 20px 32px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-size: 20px; font-weight: 600; }
+    .header .actions { display: flex; gap: 8px; }
+    .btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; transition: background 0.15s; }
+    .btn-primary { background: #3b82f6; color: white; }
+    .btn-primary:hover { background: #2563eb; }
+    .btn-danger { background: #ef4444; color: white; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-sm { padding: 4px 10px; font-size: 12px; }
+    .container { max-width: 960px; margin: 32px auto; padding: 0 20px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .card { background: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid #334155; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .card-title { font-size: 16px; font-weight: 600; }
+    .status-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    .status-online { background: #22c55e; box-shadow: 0 0 8px #22c55e80; }
+    .status-hung { background: #f59e0b; box-shadow: 0 0 8px #f59e0b80; }
+    .status-stopped { background: #6b7280; }
+    .status-errored { background: #ef4444; box-shadow: 0 0 8px #ef444480; }
+    .card-meta { font-size: 12px; color: #94a3b8; margin-bottom: 12px; }
+    .card-meta span { margin-right: 16px; }
+    .card-actions { display: flex; gap: 6px; }
+    .section-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+    .versions-table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 12px; overflow: hidden; border: 1px solid #334155; }
+    .versions-table th, .versions-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #334155; }
+    .versions-table th { background: #0f172a; font-size: 12px; text-transform: uppercase; color: #94a3b8; }
+    .badge { padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+    .badge-current { background: #3b82f620; color: #3b82f6; }
+    .toast { position: fixed; bottom: 20px; right: 20px; background: #1e293b; border: 1px solid #334155; padding: 12px 20px; border-radius: 8px; font-size: 13px; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Солярная карта — Панель управления</h1>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="checkUpdate()">Проверить обновления</button>
+      <button class="btn btn-primary" onclick="loadStatus()">Обновить</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="cards" id="service-cards"></div>
+
+    <h2 class="section-title">Версии</h2>
+    <table class="versions-table">
+      <thead>
+        <tr><th>Версия</th><th>Статус</th><th>Действие</th></tr>
+      </thead>
+      <tbody id="versions-body"></tbody>
+    </table>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STATUS_LABELS = { online: 'Работает', hung: 'Завис', stopped: 'Остановлен', errored: 'Ошибка' };
+    const STATUS_RU = { online: 'Включён', hung: 'Завис', stopped: 'Отключён', errored: 'Ошибка' };
+
+    function toast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 3000);
+    }
+
+    function formatMemory(bytes) {
+      if (!bytes) return '—';
+      return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+    }
+
+    function formatUptime(ts) {
+      if (!ts) return '—';
+      const diff = Date.now() - ts;
+      const mins = Math.floor(diff / 60000);
+      if (mins < 60) return mins + ' мин';
+      const hrs = Math.floor(mins / 60);
+      if (hrs < 24) return hrs + ' ч ' + (mins % 60) + ' мин';
+      return Math.floor(hrs / 24) + ' дн';
+    }
+
+    async function apiCall(method, path, body) {
+      const opts = { method, headers: { 'Content-Type': 'application/json' } };
+      if (body) opts.body = JSON.stringify(body);
+      const res = await fetch(path, opts);
+      return res.json();
+    }
+
+    async function serviceAction(action, name) {
+      await apiCall('POST', `/api/${action}/${name}`);
+      toast(`${action} ${name} — выполнено`);
+      setTimeout(loadStatus, 1000);
+    }
+
+    async function rollback(version) {
+      if (!confirm(`Откатиться на версию ${version}?`)) return;
+      const result = await apiCall('POST', `/api/rollback/${version}`);
+      toast(result.ok ? `Откат на ${version}` : result.error);
+      setTimeout(loadStatus, 1000);
+    }
+
+    async function checkUpdate() {
+      toast('Проверяю обновления...');
+      const result = await apiCall('POST', '/api/update');
+      toast(result.ok ? 'Обновление проверено' : result.error);
+      loadStatus();
+    }
+
+    async function loadStatus() {
+      const [statusData, versionsData] = await Promise.all([
+        apiCall('GET', '/api/status'),
+        apiCall('GET', '/api/versions'),
+      ]);
+
+      const cards = document.getElementById('service-cards');
+      cards.innerHTML = statusData.services.map(s => `
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">${s.displayName}</span>
+            <span class="status-dot status-${s.status}" title="${STATUS_LABELS[s.status] || s.status}"></span>
+          </div>
+          <div class="card-meta">
+            <span>Статус: ${STATUS_RU[s.status] || s.status}</span>
+            <span>Перезапусков: ${s.restarts}</span>
+            <span>Память: ${formatMemory(s.memory)}</span>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-primary btn-sm" onclick="serviceAction('restart','${s.name}')">Перезапустить</button>
+            ${s.status === 'online'
+              ? `<button class="btn btn-danger btn-sm" onclick="serviceAction('stop','${s.name}')">Остановить</button>`
+              : `<button class="btn btn-primary btn-sm" onclick="serviceAction('start','${s.name}')">Запустить</button>`}
+          </div>
+        </div>
+      `).join('');
+
+      const tbody = document.getElementById('versions-body');
+      tbody.innerHTML = versionsData.versions.length === 0
+        ? '<tr><td colspan="3" style="color:#94a3b8">Версии не найдены</td></tr>'
+        : versionsData.versions.map(v => `
+            <tr>
+              <td>${v} ${v === versionsData.current ? '<span class="badge badge-current">текущая</span>' : ''}</td>
+              <td>${v === versionsData.current ? 'Активна' : 'Сохранена'}</td>
+              <td>${v !== versionsData.current ? `<button class="btn btn-primary btn-sm" onclick="rollback('${v}')">Откатиться</button>` : '—'}</td>
+            </tr>
+          `).join('');
+    }
+
+    loadStatus();
+    setInterval(loadStatus, 15000);
+  </script>
+</body>
+</html>

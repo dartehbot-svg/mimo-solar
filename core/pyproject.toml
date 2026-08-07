@@ -1,0 +1,35 @@
+[project]
+name = "solar-core"
+version = "0.1.0"
+description = "Расчётное ядро для построения солярных карт"
+requires-python = ">=3.11"
+dependencies = [
+    "pyswisseph>=2.10.3",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.10.0",
+    "timezonefinder>=6.5.0",
+    "reportlab>=4.2.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.8.0",
+    "pyright>=1.1.390",
+    "pytest>=8.3.0",
+    "httpx>=0.28.0",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

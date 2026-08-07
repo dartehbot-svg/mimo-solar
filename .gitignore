@@ -1,0 +1,68 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Credentials (NEVER commit)
+доступ.txt
+*.credentials
+
+# MiMoCode
+.mimocode/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+*.egg
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Electron / Desktop
+desktop/dist/
+desktop/out/
+desktop/release/
+*.dmg
+*.exe
+*.msi
+*.AppImage
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Mac mini deployment
+versions/
+current
+current_version.txt
+
+# Logs
+*.log
+
+# Debug artifacts
+отладка/
+
+# Temporary
+tmp/
+temp/

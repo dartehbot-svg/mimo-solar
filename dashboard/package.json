@@ -1,0 +1,13 @@
+{
+  "name": "solar-dashboard",
+  "version": "0.1.0",
+  "description": "Панель мониторинга сервисов Солярной карты",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
