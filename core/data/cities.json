@@ -988,6 +988,18 @@
     ]
   },
   {
+    "name": "Липецк",
+    "country": "Россия",
+    "lat": 52.6031,
+    "lon": 39.5708,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe"
+    ]
+  },
+  {
     "name": "Тюмень",
     "country": "Россия",
     "lat": 57.1553,

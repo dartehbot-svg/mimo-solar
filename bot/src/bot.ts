@@ -2,21 +2,64 @@ import { Keyboard } from '@maxhub/max-bot-api';
 import { StateManager } from './state';
 import * as api from './api';
 
-// Клавиатуры
-export const actionKeyboard = Keyboard.inlineKeyboard([
+// ── Клавиатуры ──────────────────────────────────────────────────
+
+// Стартовое меню
+export const startKeyboard = Keyboard.inlineKeyboard([
   [
     Keyboard.button.callback('Натальная карта', 'natal', { intent: 'positive' }),
     Keyboard.button.callback('Соляр', 'solar', { intent: 'positive' }),
   ],
   [
-    Keyboard.button.callback('Колесо карты', 'chart', { intent: 'positive' }),
     Keyboard.button.callback('Лучшее место', 'bestplace'),
+    Keyboard.button.callback('Колесо карты', 'chart'),
   ],
   [
-    Keyboard.button.callback('Соляр на другой год', 'solar_year'),
+    Keyboard.button.callback('Мои профили', 'profile_cmd'),
+    Keyboard.button.callback('История', 'history_cmd'),
   ],
 ]);
 
+// После расчёта натала
+export const natalResultKeyboard = Keyboard.inlineKeyboard([
+  [
+    Keyboard.button.callback('Описание', 'description'),
+    Keyboard.button.callback('Колесо карты', 'chart'),
+  ],
+  [
+    Keyboard.button.callback('Соляр', 'solar'),
+    Keyboard.button.callback('Лучшее место', 'bestplace'),
+  ],
+  [
+    Keyboard.button.callback('В начало', 'start_cmd'),
+  ],
+]);
+
+// Выбор типа описания
+export const descKeyboard = Keyboard.inlineKeyboard([
+  [
+    Keyboard.button.callback('Краткое', 'desc_short'),
+    Keyboard.button.callback('Полное', 'desc_full'),
+  ],
+  [
+    Keyboard.button.callback('Назад', 'natal_back'),
+    Keyboard.button.callback('В начало', 'start_cmd'),
+  ],
+]);
+
+// Полное описание — показать или скачать
+export const fullDescKeyboard = Keyboard.inlineKeyboard([
+  [
+    Keyboard.button.callback('На экран', 'desc_screen'),
+    Keyboard.button.callback('Скачать файл', 'desc_download'),
+  ],
+  [
+    Keyboard.button.callback('Назад', 'description'),
+    Keyboard.button.callback('В начало', 'start_cmd'),
+  ],
+]);
+
+// Сферы для лучшего места
 const sphereKeyboard = Keyboard.inlineKeyboard([
   [
     Keyboard.button.callback('Карьера', 'sphere:career'),
@@ -27,6 +70,9 @@ const sphereKeyboard = Keyboard.inlineKeyboard([
     Keyboard.button.callback('Финансы', 'sphere:finance'),
     Keyboard.button.callback('Творчество', 'sphere:creativity'),
     Keyboard.button.callback('Духовность', 'sphere:spirituality'),
+  ],
+  [
+    Keyboard.button.callback('Назад', 'start_cmd'),
   ],
 ]);
 
@@ -51,6 +97,7 @@ const QUICK_CITIES: Record<string, { lat: number; lon: number }> = {
   'ереван': { lat: 40.1792, lon: 44.4991 },
   'белград': { lat: 44.7866, lon: 20.4489 },
   'алматы': { lat: 43.2220, lon: 76.8512 },
+  'липецк': { lat: 52.6031, lon: 39.5708 },
 };
 
 const SPHERES: Record<string, string[]> = {
@@ -175,36 +222,32 @@ export async function handleStart(ctx: any, userId: number, userName?: string): 
   // Регистрируем пользователя
   await api.registerUser(userId, userName);
 
+  // Берём только имя (первое слово), убираем фамилию
+  const firstName = userName?.split(/\s+/)[0] || '';
+
   // Проверяем, есть ли сохранённые профили
   const profiles = await api.getProfiles(userId);
 
   let greeting = '✨ Добро пожаловать в Соляр! ✨\n\n';
-  if (userName) {
-    greeting = `✨ Добро пожаловать, ${userName}! ✨\n\n`;
+  if (firstName) {
+    greeting = `✨ Добро пожаловать, ${firstName}! ✨\n\n`;
   }
 
-  greeting += 'Я помогу вам рассчитать:\n';
-  greeting += '• Натальную карту — ваша карта рождения\n';
+  greeting += 'Я помогу рассчитать:\n';
+  greeting += '• Натальную карту — карта рождения\n';
   greeting += '• Соляр — прогноз на год\n';
-  greeting += '• Лучшее место — где лучше встретить день рождения\n\n';
+  greeting += '• Лучшее место — где встретить день рождения\n';
 
   if (profiles.length > 0) {
-    greeting += '📁 Ваши профили:\n';
+    greeting += '\n📁 Ваши профили:\n';
     profiles.forEach((p: any) => {
       greeting += `• ${p.label}: ${p.birth_date || '—'}\n`;
     });
-    greeting += '\n';
   }
 
-  greeting += 'Выберите действие:\n\n';
-  greeting += '/natal — Натальная карта\n';
-  greeting += '/solar — Соляр на год\n';
-  greeting += '/bestplace — Лучшее место\n';
-  greeting += '/profile — Мои профили\n';
-  greeting += '/history — История расчётов\n';
-  greeting += '/help — Помощь';
+  greeting += '\nВыберите действие:';
 
-  ctx.reply(greeting);
+  ctx.reply(greeting, { attachments: [startKeyboard] });
 }
 
 export function handleBirthDate(ctx: any, text: string, states: StateManager, userId: number): void {
@@ -279,7 +322,7 @@ export function handleAction(ctx: any, text: string, states: StateManager, userI
     states.setStep(userId, 'awaiting_sphere');
     ctx.reply('Что хотите улучшить?', { attachments: [sphereKeyboard] });
   } else {
-    ctx.reply('Выберите действие:', { attachments: [actionKeyboard] });
+    ctx.reply('Выберите действие:', { attachments: [startKeyboard] });
   }
 }
 
@@ -451,8 +494,10 @@ export async function calculateNatal(ctx: any, data: Record<string, any>, states
       });
     }
 
+    // Сохраняем данные натала для последующего использования (описание)
+    states.setData(userId, { lastNatalResult: result });
     states.setStep(userId, 'awaiting_action');
-    ctx.reply(message, { attachments: [actionKeyboard] });
+    ctx.reply(message, { attachments: [natalResultKeyboard] });
   } catch (err: any) {
     console.error('Ошибка расчёта натала:', err.message);
     ctx.reply('Ошибка при расчёте. Попробуйте снова.\n/start');
@@ -488,7 +533,7 @@ export async function calculateSolar(ctx: any, data: Record<string, any>, year: 
     await api.addHistory(userId, 'solar', undefined, { year, city: data.solarCity }, { planets: result.planets?.length });
 
     states.setStep(userId, 'awaiting_action');
-    ctx.reply(message, { attachments: [actionKeyboard] });
+    ctx.reply(message, { attachments: [natalResultKeyboard] });
   } catch (err: any) {
     console.error('Ошибка расчёта соляра:', err.message);
     ctx.reply('Ошибка при расчёте. Попробуйте снова.\n/start');
@@ -523,7 +568,7 @@ export async function calculateBestPlace(ctx: any, data: Record<string, any>, st
     await api.addHistory(userId, 'bestplace', undefined, { spheres: data.spheres }, { topCity: results[0]?.city });
 
     states.setStep(userId, 'awaiting_action');
-    ctx.reply(message, { attachments: [actionKeyboard] });
+    ctx.reply(message, { attachments: [natalResultKeyboard] });
   } catch (err: any) {
     console.error('Ошибка расчёта лучшего места:', err.message);
     ctx.reply('Ошибка при расчёте. Попробуйте снова.\n/start');
@@ -546,5 +591,88 @@ export async function sendChartImage(ctx: any, data: Record<string, any>, userId
   } catch (err: any) {
     console.error('[chart] Ошибка:', err.message);
     ctx.reply('Ошибка генерации колеса. Попробуйте позже.');
+  }
+}
+
+// ── Описание ──────────────────────────────────────────────────────
+
+const PLANET_NAMES_RU: Record<string, string> = {
+  sun: 'Солнце', moon: 'Луна', mercury: 'Меркурий', venus: 'Венера',
+  mars: 'Марс', jupiter: 'Юпитер', saturn: 'Сатурн', uranus: 'Уран',
+  neptune: 'Нептун', pluto: 'Плутон',
+};
+
+export async function showShortDescription(ctx: any, data: Record<string, any>, userId: number): Promise<void> {
+  try {
+    const interp = await api.getInterpretations({
+      birth_date: data.birthDate,
+      birth_time: data.birthTime,
+      latitude: data.birthLat,
+      longitude: data.birthLon,
+    }, 'short');
+
+    const text = interp.map((i: any) => {
+      const name = PLANET_NAMES_RU[i.planet] || i.planet;
+      return `${name} (${i.house}-й дом, ${i.sign}): ${i.text}`;
+    }).join('\n\n');
+
+    ctx.reply(`Краткое описание натальной карты:\n\n${text}`, { attachments: [natalResultKeyboard] });
+  } catch (err: any) {
+    console.error('[desc] Ошибка:', err.message);
+    ctx.reply('Ошибка получения описания.');
+  }
+}
+
+export async function showFullDescription(ctx: any, data: Record<string, any>, userId: number): Promise<void> {
+  try {
+    const interp = await api.getInterpretations({
+      birth_date: data.birthDate,
+      birth_time: data.birthTime,
+      latitude: data.birthLat,
+      longitude: data.birthLon,
+    }, 'full');
+
+    const text = interp.map((i: any) => {
+      const name = PLANET_NAMES_RU[i.planet] || i.planet;
+      return `${name} в ${i.house}-м доме (${i.sign}):\n${i.text}`;
+    }).join('\n\n');
+
+    ctx.reply(`Полное описание натальной карты:\n\n${text}`, { attachments: [natalResultKeyboard] });
+  } catch (err: any) {
+    console.error('[desc] Ошибка:', err.message);
+    ctx.reply('Ошибка получения описания.');
+  }
+}
+
+export async function downloadFullDescription(ctx: any, data: Record<string, any>, userId: number): Promise<void> {
+  try {
+    const interp = await api.getInterpretations({
+      birth_date: data.birthDate,
+      birth_time: data.birthTime,
+      latitude: data.birthLat,
+      longitude: data.birthLon,
+    }, 'full');
+
+    const text = interp.map((i: any) => {
+      const name = PLANET_NAMES_RU[i.planet] || i.planet;
+      return `${name} в ${i.house}-м доме (${i.sign}):\n${i.text}`;
+    }).join('\n\n');
+
+    const header = `Натальная карта\nДата: ${data.birthDate} ${data.birthTime}\nГород: ${data.birthCity || ''}\n\n`;
+    const fullText = header + text;
+    const buffer = Buffer.from(fullText, 'utf-8');
+
+    // Отправляем как текстовый файл
+    const fileName = `natal_${data.birthDate}.txt`;
+    try {
+      const file = await ctx.api.uploadFile({ source: buffer, filename: fileName });
+      await ctx.reply('Файл с описанием:', { attachments: [file.toJson()] });
+    } catch {
+      // Fallback — если uploadFile не поддерживается, выводим на экран
+      await ctx.reply(fullText, { attachments: [natalResultKeyboard] });
+    }
+  } catch (err: any) {
+    console.error('[desc] Ошибка:', err.message);
+    ctx.reply('Ошибка генерации файла.');
   }
 }

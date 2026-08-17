@@ -180,6 +180,31 @@ async def api_natal(req: NatalRequest):
         raise HTTPException(status_code=400, detail=str(e))
 
 
+class InterpretationRequest(BaseModel):
+    birth_date: str
+    birth_time: str
+    latitude: float
+    longitude: float
+    mode: Literal["short", "full"] = Field("short", description="short или full")
+
+
+@app.post("/api/interpretations")
+async def api_interpretations(req: InterpretationRequest):
+    """Получить толкования планет в домах для натальной карты."""
+    try:
+        natal = calculate_natal(
+            req.birth_date, req.birth_time,
+            req.latitude, req.longitude,
+        )
+        interpretations = get_full_report(natal.planets, mode=req.mode)
+        return [
+            {"planet": i.planet, "house": i.house, "sign": i.sign, "text": i.text}
+            for i in interpretations
+        ]
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
 @app.post("/api/solar", response_model=SolarResponse)
 async def api_solar(req: SolarRequest):
     """Рассчитать солярную карту."""

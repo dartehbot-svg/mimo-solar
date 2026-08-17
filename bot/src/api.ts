@@ -140,3 +140,13 @@ export async function getChartImage(data: {
   const res = await axios.post(`${CORE_API}/api/chart-image`, data, { responseType: 'arraybuffer' });
   return Buffer.from(res.data);
 }
+
+export async function getInterpretations(data: {
+  birth_date: string;
+  birth_time: string;
+  latitude: number;
+  longitude: number;
+}, mode: 'short' | 'full' = 'short') {
+  const res = await axios.post(`${CORE_API}/api/interpretations`, { ...data, mode });
+  return res.data;
+}

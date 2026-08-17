@@ -12,7 +12,9 @@ import {
   handleAction, handleSolarYear, handleSolarCity, handleSphere,
   handleProfileCommand, handleProfileAdd, handleHistoryCommand,
   calculateNatal, calculateSolar, calculateBestPlace, sendChartImage,
-  actionKeyboard, getUserId, capitalize,
+  showShortDescription, showFullDescription, downloadFullDescription,
+  startKeyboard, natalResultKeyboard, descKeyboard, fullDescKeyboard,
+  getUserId, capitalize, formatPlanetTable, formatAspects,
 } from './bot';
 import { StateManager } from './state';
 import * as api from './api';
@@ -27,20 +29,6 @@ console.log('Токен загружен:', token.slice(0, 8) + '...');
 
 const bot = new Bot(token);
 const states = new StateManager();
-
-// Клавиатура сфер (для кнопок)
-const sphereKeyboard = Keyboard.inlineKeyboard([
-  [
-    Keyboard.button.callback('Карьера', 'sphere:career'),
-    Keyboard.button.callback('Любовь', 'sphere:love'),
-    Keyboard.button.callback('Здоровье', 'sphere:health'),
-  ],
-  [
-    Keyboard.button.callback('Финансы', 'sphere:finance'),
-    Keyboard.button.callback('Творчество', 'sphere:creativity'),
-    Keyboard.button.callback('Духовность', 'sphere:spirituality'),
-  ],
-]);
 
 async function main() {
   // Проверяем токен
@@ -174,6 +162,35 @@ async function main() {
   });
 
   // Callback-кнопки
+
+  // ── Навигация ────────────────────────────────
+  bot.action('start_cmd', async (ctx: any) => {
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    const userName = ctx.user?.name || ctx.message?.sender?.name;
+    await handleStart(ctx, userId, userName);
+  });
+
+  bot.action('natal_back', async (ctx: any) => {
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    const data = states.getData(userId);
+    if (data.lastNatalResult) {
+      const planetTable = formatPlanetTable(data.lastNatalResult.planets);
+      const aspects = formatAspects(data.lastNatalResult.aspects);
+      const message =
+        `Натальная карта\n` +
+        `${data.birthDate} ${data.birthTime}, ${data.birthCity}\n\n` +
+        `Планеты:\n${planetTable}\n\n` +
+        `ASC: ${Math.round(data.lastNatalResult.asc)}° | MC: ${Math.round(data.lastNatalResult.mc)}°\n\n` +
+        `Аспекты:\n${aspects}`;
+      ctx.reply(message, { attachments: [natalResultKeyboard] });
+    } else {
+      ctx.reply('Нет данных натала. Рассчитайте заново:', { attachments: [startKeyboard] });
+    }
+  });
+
+  // ── Основные действия ────────────────────────
   bot.action('natal', async (ctx: any) => {
     const userId = getUserId(ctx);
     if (!userId) return;
@@ -197,7 +214,7 @@ async function main() {
     if (data.birthDate) {
       states.setData(userId, { solarYear: new Date().getFullYear() });
       states.setStep(userId, 'awaiting_solar_city');
-      ctx.reply('Где планируете встретить день рождения?\n\nМосква, Санкт-Петербург, Сочи, Дубай...');
+      ctx.reply('Где планируете встретить день рождения?\n\nНачните вводить город...');
     } else {
       states.reset(userId);
       states.setStep(userId, 'awaiting_birth_date');
@@ -214,6 +231,21 @@ async function main() {
     if (data.birthDate) {
       states.setData(userId, { action: 'bestplace' });
       states.setStep(userId, 'awaiting_sphere');
+      const sphereKeyboard = Keyboard.inlineKeyboard([
+        [
+          Keyboard.button.callback('Карьера', 'sphere:career'),
+          Keyboard.button.callback('Любовь', 'sphere:love'),
+          Keyboard.button.callback('Здоровье', 'sphere:health'),
+        ],
+        [
+          Keyboard.button.callback('Финансы', 'sphere:finance'),
+          Keyboard.button.callback('Творчество', 'sphere:creativity'),
+          Keyboard.button.callback('Духовность', 'sphere:spirituality'),
+        ],
+        [
+          Keyboard.button.callback('Назад', 'start_cmd'),
+        ],
+      ]);
       ctx.reply('Что хотите улучшить?', { attachments: [sphereKeyboard] });
     } else {
       states.reset(userId);
@@ -237,7 +269,7 @@ async function main() {
     console.log(`[action] user=${userId} action=chart`);
     const data = states.getData(userId);
     if (!data.birthDate) {
-      ctx.reply('Сначала рассчитайте натальную карту (/natal)');
+      ctx.reply('Сначала рассчитайте натальную карту.', { attachments: [startKeyboard] });
       return;
     }
     await sendChartImage(ctx, data, userId);
@@ -254,6 +286,65 @@ async function main() {
     console.log(`[action] user=${userId} sphere=${sphere}`);
     states.setData(userId, { spheres: [sphere] });
     await calculateBestPlace(ctx, states.getData(userId), states, userId);
+  });
+
+  // ── Описание ─────────────────────────────────
+  bot.action('description', async (ctx: any) => {
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    ctx.reply('Выберите тип описания:', { attachments: [descKeyboard] });
+  });
+
+  bot.action('desc_short', async (ctx: any) => {
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    const data = states.getData(userId);
+    if (!data.birthDate) {
+      ctx.reply('Сначала рассчитайте натальную карту.', { attachments: [startKeyboard] });
+      return;
+    }
+    await showShortDescription(ctx, data, userId);
+  });
+
+  bot.action('desc_full', async (ctx: any) => {
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    ctx.reply('Полное описание:', { attachments: [fullDescKeyboard] });
+  });
+
+  bot.action('desc_screen', async (ctx: any) => {
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    const data = states.getData(userId);
+    if (!data.birthDate) {
+      ctx.reply('Сначала рассчитайте натальную карту.', { attachments: [startKeyboard] });
+      return;
+    }
+    await showFullDescription(ctx, data, userId);
+  });
+
+  bot.action('desc_download', async (ctx: any) => {
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    const data = states.getData(userId);
+    if (!data.birthDate) {
+      ctx.reply('Сначала рассчитайте натальную карту.', { attachments: [startKeyboard] });
+      return;
+    }
+    await downloadFullDescription(ctx, data, userId);
+  });
+
+  // ── Профили и история ────────────────────────
+  bot.action('profile_cmd', async (ctx: any) => {
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    await handleProfileCommand(ctx, userId);
+  });
+
+  bot.action('history_cmd', async (ctx: any) => {
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    await handleHistoryCommand(ctx, userId);
   });
 
   bot.catch((err: any) => {
