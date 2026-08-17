@@ -11,6 +11,7 @@ import {
   handleStart, handleBirthDate, handleBirthTime, handleBirthCity,
   handleAction, handleSolarYear, handleSolarCity, handleSphere,
   handleProfileCommand, handleProfileAdd, handleHistoryCommand,
+  handleProfileName, handleProfileDate, handleProfileTime, handleProfileCity,
   calculateNatal, calculateSolar, calculateBestPlace, sendChartImage,
   showShortDescription, showFullDescription, downloadFullDescription,
   startKeyboard, natalResultKeyboard, descKeyboard, fullDescKeyboard,
@@ -155,6 +156,18 @@ async function main() {
         break;
       case 'awaiting_sphere':
         await handleSphere(ctx, text, states, userId);
+        break;
+      case 'awaiting_profile_name':
+        handleProfileName(ctx, text, states, userId);
+        break;
+      case 'awaiting_profile_date':
+        handleProfileDate(ctx, text, states, userId);
+        break;
+      case 'awaiting_profile_time':
+        handleProfileTime(ctx, text, states, userId);
+        break;
+      case 'awaiting_profile_city':
+        await handleProfileCity(ctx, text, states, userId);
         break;
       default:
         ctx.reply('Отправьте /start для начала работы.');
@@ -309,6 +322,11 @@ async function main() {
   bot.action('desc_full', async (ctx: any) => {
     const userId = getUserId(ctx);
     if (!userId) return;
+    const data = states.getData(userId);
+    if (!data.birthDate) {
+      ctx.reply('Сначала рассчитайте натальную карту.', { attachments: [startKeyboard] });
+      return;
+    }
     ctx.reply('Полное описание:', { attachments: [fullDescKeyboard] });
   });
 
@@ -345,6 +363,13 @@ async function main() {
     const userId = getUserId(ctx);
     if (!userId) return;
     await handleHistoryCommand(ctx, userId);
+  });
+
+  bot.action('add_profile', async (ctx: any) => {
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    states.setStep(userId, 'awaiting_profile_name');
+    ctx.reply('Введите имя человека (например: Мама, Петр, Аня):');
   });
 
   bot.catch((err: any) => {

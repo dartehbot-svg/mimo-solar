@@ -215,7 +215,15 @@ export async function getCitySuggestions(query: string): Promise<string[]> {
 // ── Обработчики диалога ──────────────────────────────────────────
 
 export function getUserId(ctx: any): number {
-  return ctx.message?.sender?.user_id || ctx.message?.sender_id || ctx.user?.user_id || ctx.callback?.user_id;
+  return (
+    ctx.message?.sender?.user_id ||
+    ctx.message?.sender_id ||
+    ctx.user?.user_id ||
+    ctx.callback?.user_id ||
+    ctx.callback?.from?.user_id ||
+    ctx.from?.user_id ||
+    0
+  );
 }
 
 export async function handleStart(ctx: any, userId: number, userName?: string): Promise<void> {
@@ -313,14 +321,16 @@ export function handleAction(ctx: any, text: string, states: StateManager, userI
   } else if (lower.includes('соляр') || lower.includes('текущий')) {
     states.setData(userId, { solarYear: new Date().getFullYear() });
     states.setStep(userId, 'awaiting_solar_city');
-    ctx.reply(
-      'Где планируете встретить день рождения?\n\n' +
-      Object.keys(QUICK_CITIES).map(c => `• ${capitalize(c)}`).join('\n')
-    );
+    ctx.reply('Где планируете встретить день рождения?\n\nНачните вводить город...');
   } else if (lower.includes('лучшее') || lower.includes('место')) {
     states.setData(userId, { action: 'bestplace' });
     states.setStep(userId, 'awaiting_sphere');
     ctx.reply('Что хотите улучшить?', { attachments: [sphereKeyboard] });
+  } else if (parseDate(text)) {
+    // Пользователь ввёл дату — начинаем новый расчёт натала
+    states.setData(userId, { birthDate: parseDate(text), action: 'natal' });
+    states.setStep(userId, 'awaiting_birth_time');
+    ctx.reply('Введите время рождения в формате ЧЧ:ММ\n\nЕсли не знаете — напишите "не знаю"');
   } else {
     ctx.reply('Выберите действие:', { attachments: [startKeyboard] });
   }
@@ -369,22 +379,29 @@ export async function handleSphere(ctx: any, text: string, states: StateManager,
 
 // ── Профили ──────────────────────────────────────────────────────
 
+const profileKeyboard = Keyboard.inlineKeyboard([
+  [Keyboard.button.callback('Добавить человека', 'add_profile')],
+  [Keyboard.button.callback('Назад', 'start_cmd')],
+]);
+
 export async function handleProfileCommand(ctx: any, userId: number): Promise<void> {
-  const profiles = await api.getProfiles(userId);
-  if (profiles.length === 0) {
-    ctx.reply(
-      'У вас пока нет сохранённых профилей.\n\n' +
-      'Профили создаются автоматически при расчёте натальной карты.\n' +
-      'Или создайте вручную: /profile_add Имя ДД.ММ.ГГГГ ЧЧ:ММ Город'
-    );
-    return;
+  try {
+    const profiles = await api.getProfiles(userId);
+
+    if (profiles.length === 0) {
+      ctx.reply('У вас пока нет сохранённых профилей.\n\nПрофили создаются автоматически при расчёте натальной карты.', { attachments: [profileKeyboard] });
+      return;
+    }
+
+    const list = profiles.map((p: any, i: number) =>
+      `${i + 1}. ${p.label}\n   Дата: ${p.birth_date || '—'} ${p.birth_time || ''}\n   Город: ${p.city_name || '—'}`
+    ).join('\n\n');
+
+    ctx.reply(`Ваши профили:\n\n${list}`, { attachments: [profileKeyboard] });
+  } catch (err: any) {
+    console.error('[profile] Ошибка:', err.message);
+    ctx.reply('Ошибка загрузки профилей.', { attachments: [profileKeyboard] });
   }
-
-  const list = profiles.map((p: any, i: number) =>
-    `${i + 1}. ${p.label}\n   Дата: ${p.birth_date || '—'} ${p.birth_time || ''}\n   Город: ${p.city_name || '—'}`
-  ).join('\n\n');
-
-  ctx.reply(`Ваши профили:\n\n${list}\n\nУдалить: /profile_del <номер>`);
 }
 
 export async function handleProfileAdd(ctx: any, text: string, userId: number): Promise<void> {
@@ -426,6 +443,73 @@ export async function handleProfileAdd(ctx: any, text: string, userId: number): 
   } else {
     ctx.reply('Ошибка создания профиля.');
   }
+}
+
+// ── Интерактивное создание профиля ────────────────────────────────
+
+export function handleProfileName(ctx: any, text: string, states: StateManager, userId: number): void {
+  const name = text.trim();
+  if (!name || name.length < 1) {
+    ctx.reply('Введите имя (например: Мама, Петр, Аня):');
+    return;
+  }
+  states.setData(userId, { profileName: name });
+  states.setStep(userId, 'awaiting_profile_date');
+  ctx.reply(`Имя: ${name}\n\nТеперь введите дату рождения в формате ДД.ММ.ГГГГ`);
+}
+
+export function handleProfileDate(ctx: any, text: string, states: StateManager, userId: number): void {
+  const date = parseDate(text);
+  if (!date) {
+    ctx.reply('Не удалось распознать дату. Попробуйте:\n15.03.1990\n15/03/1990\n15 03 1990');
+    return;
+  }
+  states.setData(userId, { profileDate: date });
+  states.setStep(userId, 'awaiting_profile_time');
+  ctx.reply('Введите время рождения в формате ЧЧ:ММ\n\nЕсли не знаете — напишите "не знаю"');
+}
+
+export function handleProfileTime(ctx: any, text: string, states: StateManager, userId: number): void {
+  const time = parseTime(text);
+  if (!time) {
+    ctx.reply('Неверный формат времени. Введите в формате ЧЧ:ММ\n\nНапример: 14:30');
+    return;
+  }
+  states.setData(userId, { profileTime: time });
+  states.setStep(userId, 'awaiting_profile_city');
+  ctx.reply('Введите место рождения (город):\n\nНачните вводить — покажу варианты');
+}
+
+export async function handleProfileCity(ctx: any, text: string, states: StateManager, userId: number): Promise<void> {
+  const coords = await findCityCoords(text);
+  if (!coords) {
+    const suggestions = await getCitySuggestions(text);
+    if (suggestions.length > 0) {
+      ctx.reply('Город не найден. Возможно:\n\n' + suggestions.map(s => `• ${s}`).join('\n'));
+    } else {
+      ctx.reply('Город не найден. Попробуйте:\n' + Object.keys(QUICK_CITIES).map(c => `• ${capitalize(c)}`).join('\n'));
+    }
+    return;
+  }
+
+  const data = states.getData(userId);
+  const profile = await api.createProfile({
+    user_id: userId,
+    label: data.profileName,
+    birth_date: data.profileDate,
+    birth_time: data.profileTime,
+    latitude: coords.lat,
+    longitude: coords.lon,
+    city_name: coords.name,
+  });
+
+  if (profile) {
+    ctx.reply(`Профиль "${data.profileName}" создан!\nДата: ${data.profileDate} ${data.profileTime}\nГород: ${coords.name}`, { attachments: [startKeyboard] });
+  } else {
+    ctx.reply('Ошибка создания профиля.', { attachments: [startKeyboard] });
+  }
+
+  states.setStep(userId, 'awaiting_action');
 }
 
 // ── История ──────────────────────────────────────────────────────
@@ -500,7 +584,8 @@ export async function calculateNatal(ctx: any, data: Record<string, any>, states
     ctx.reply(message, { attachments: [natalResultKeyboard] });
   } catch (err: any) {
     console.error('Ошибка расчёта натала:', err.message);
-    ctx.reply('Ошибка при расчёте. Попробуйте снова.\n/start');
+    states.setStep(userId, 'awaiting_action');
+    ctx.reply('Ошибка при расчёте. Попробуйте снова.', { attachments: [startKeyboard] });
   }
 }
 
@@ -536,7 +621,8 @@ export async function calculateSolar(ctx: any, data: Record<string, any>, year: 
     ctx.reply(message, { attachments: [natalResultKeyboard] });
   } catch (err: any) {
     console.error('Ошибка расчёта соляра:', err.message);
-    ctx.reply('Ошибка при расчёте. Попробуйте снова.\n/start');
+    states.setStep(userId, 'awaiting_action');
+    ctx.reply('Ошибка при расчёте. Попробуйте снова.', { attachments: [startKeyboard] });
   }
 }
 
@@ -571,7 +657,8 @@ export async function calculateBestPlace(ctx: any, data: Record<string, any>, st
     ctx.reply(message, { attachments: [natalResultKeyboard] });
   } catch (err: any) {
     console.error('Ошибка расчёта лучшего места:', err.message);
-    ctx.reply('Ошибка при расчёте. Попробуйте снова.\n/start');
+    states.setStep(userId, 'awaiting_action');
+    ctx.reply('Ошибка при расчёте. Попробуйте снова.', { attachments: [startKeyboard] });
   }
 }
 
