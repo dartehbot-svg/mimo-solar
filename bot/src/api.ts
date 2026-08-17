@@ -150,3 +150,76 @@ export async function getInterpretations(data: {
   const res = await axios.post(`${CORE_API}/api/interpretations`, { ...data, mode });
   return res.data;
 }
+
+// ── Персоны ─────────────────────────────────────────────────────
+
+export async function getPersons(userId: number) {
+  try {
+    const res = await axios.get(`${CORE_API}/api/users/${userId}/persons`);
+    return res.data;
+  } catch {
+    return [];
+  }
+}
+
+export async function createPerson(data: {
+  user_id: number;
+  label?: string;
+  full_name?: string;
+  birth_date?: string;
+  birth_time?: string;
+  birth_time_accuracy?: string;
+  birth_place?: string;
+  latitude?: number;
+  longitude?: number;
+  tz_offset?: number;
+}) {
+  try {
+    const res = await axios.post(`${CORE_API}/api/persons`, data);
+    return res.data;
+  } catch (err: any) {
+    console.warn('[api] createPerson error:', err.message);
+    return null;
+  }
+}
+
+export async function updatePerson(personId: number, data: Record<string, any>) {
+  try {
+    const res = await axios.put(`${CORE_API}/api/persons/${personId}`, data);
+    return res.data;
+  } catch {
+    return null;
+  }
+}
+
+// ── Расчёты (charts) ────────────────────────────────────────────
+
+export async function saveChart(data: {
+  person_id: number;
+  type: string;
+  input_params?: any;
+  result_data?: any;
+  short_text?: string;
+  full_text?: string;
+}) {
+  try {
+    const res = await axios.post(`${CORE_API}/api/charts`, data);
+    return res.data;
+  } catch (err: any) {
+    console.warn('[api] saveChart error:', err.message);
+    return null;
+  }
+}
+
+export async function getSolarInterpretations(data: {
+  birth_date: string;
+  birth_time: string;
+  birth_latitude: number;
+  birth_longitude: number;
+  solar_year: number;
+  solar_latitude: number;
+  solar_longitude: number;
+}, mode: 'short' | 'full' = 'short') {
+  const res = await axios.post(`${CORE_API}/api/solar-interpretations`, { ...data, mode });
+  return res.data;
+}

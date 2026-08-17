@@ -14,7 +14,7 @@ import {
   handleProfileName, handleProfileDate, handleProfileTime, handleProfileCity,
   calculateNatal, calculateSolar, calculateBestPlace, sendChartImage,
   showShortDescription, showFullDescription, downloadFullDescription,
-  startKeyboard, natalResultKeyboard, descKeyboard, fullDescKeyboard,
+  startKeyboard, natalResultKeyboard, descKeyboard, fullDescKeyboard, sphereKeyboard,
   getUserId, capitalize, formatPlanetTable, formatAspects,
 } from './bot';
 import { StateManager } from './state';
@@ -178,6 +178,7 @@ async function main() {
 
   // ── Навигация ────────────────────────────────
   bot.action('start_cmd', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     const userName = ctx.user?.name || ctx.message?.sender?.name;
@@ -185,6 +186,7 @@ async function main() {
   });
 
   bot.action('natal_back', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     const data = states.getData(userId);
@@ -205,6 +207,7 @@ async function main() {
 
   // ── Основные действия ────────────────────────
   bot.action('natal', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     console.log(`[action] user=${userId} action=natal`);
@@ -220,6 +223,7 @@ async function main() {
   });
 
   bot.action('solar', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     console.log(`[action] user=${userId} action=solar`);
@@ -237,6 +241,7 @@ async function main() {
   });
 
   bot.action('bestplace', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     console.log(`[action] user=${userId} action=bestplace`);
@@ -244,21 +249,6 @@ async function main() {
     if (data.birthDate) {
       states.setData(userId, { action: 'bestplace' });
       states.setStep(userId, 'awaiting_sphere');
-      const sphereKeyboard = Keyboard.inlineKeyboard([
-        [
-          Keyboard.button.callback('Карьера', 'sphere:career'),
-          Keyboard.button.callback('Любовь', 'sphere:love'),
-          Keyboard.button.callback('Здоровье', 'sphere:health'),
-        ],
-        [
-          Keyboard.button.callback('Финансы', 'sphere:finance'),
-          Keyboard.button.callback('Творчество', 'sphere:creativity'),
-          Keyboard.button.callback('Духовность', 'sphere:spirituality'),
-        ],
-        [
-          Keyboard.button.callback('Назад', 'start_cmd'),
-        ],
-      ]);
       ctx.reply('Что хотите улучшить?', { attachments: [sphereKeyboard] });
     } else {
       states.reset(userId);
@@ -269,6 +259,7 @@ async function main() {
   });
 
   bot.action('solar_year', (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     console.log(`[action] user=${userId} action=solar_year`);
@@ -277,6 +268,7 @@ async function main() {
   });
 
   bot.action('chart', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     console.log(`[action] user=${userId} action=chart`);
@@ -289,6 +281,7 @@ async function main() {
   });
 
   bot.action(/sphere:(.+)/, async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) {
       console.error('[action] Не удалось определить userId');
@@ -303,12 +296,14 @@ async function main() {
 
   // ── Описание ─────────────────────────────────
   bot.action('description', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     ctx.reply('Выберите тип описания:', { attachments: [descKeyboard] });
   });
 
   bot.action('desc_short', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     const data = states.getData(userId);
@@ -320,6 +315,7 @@ async function main() {
   });
 
   bot.action('desc_full', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     const data = states.getData(userId);
@@ -331,6 +327,7 @@ async function main() {
   });
 
   bot.action('desc_screen', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     const data = states.getData(userId);
@@ -342,6 +339,7 @@ async function main() {
   });
 
   bot.action('desc_download', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     const data = states.getData(userId);
@@ -354,18 +352,21 @@ async function main() {
 
   // ── Профили и история ────────────────────────
   bot.action('profile_cmd', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     await handleProfileCommand(ctx, userId);
   });
 
   bot.action('history_cmd', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     await handleHistoryCommand(ctx, userId);
   });
 
   bot.action('add_profile', async (ctx: any) => {
+    ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
     states.setStep(userId, 'awaiting_profile_name');

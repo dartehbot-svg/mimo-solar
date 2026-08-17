@@ -188,6 +188,17 @@ class InterpretationRequest(BaseModel):
     mode: Literal["short", "full"] = Field("short", description="short или full")
 
 
+class SolarInterpretationRequest(BaseModel):
+    birth_date: str
+    birth_time: str
+    birth_latitude: float
+    birth_longitude: float
+    solar_year: int
+    solar_latitude: float
+    solar_longitude: float
+    mode: Literal["short", "full"] = Field("short")
+
+
 @app.post("/api/interpretations")
 async def api_interpretations(req: InterpretationRequest):
     """Получить толкования планет в домах для натальной карты."""
@@ -196,11 +207,59 @@ async def api_interpretations(req: InterpretationRequest):
             req.birth_date, req.birth_time,
             req.latitude, req.longitude,
         )
-        interpretations = get_full_report(natal.planets, mode=req.mode)
-        return [
-            {"planet": i.planet, "house": i.house, "sign": i.sign, "text": i.text}
-            for i in interpretations
-        ]
+
+        if req.mode == "short":
+            from .interpretation import generate_short_description
+            text = generate_short_description(
+                natal.planets, natal.houses.asc if natal.houses else 0,
+                natal.houses.mc if natal.houses else 0, natal.aspects,
+            )
+            return {"mode": "short", "text": text}
+        elif req.mode == "full":
+            from .interpretation import generate_full_description
+            text = generate_full_description(
+                natal.planets, natal.houses.asc if natal.houses else 0,
+                natal.houses.mc if natal.houses else 0, natal.aspects,
+            )
+            return {"mode": "full", "text": text}
+        else:
+            from .interpretation import get_full_report
+            interpretations = get_full_report(natal.planets, mode=req.mode)
+            return [
+                {"planet": i.planet, "house": i.house, "sign": i.sign, "text": i.text}
+                for i in interpretations
+            ]
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.post("/api/solar-interpretations")
+async def api_solar_interpretations(req: SolarInterpretationRequest):
+    """Получить толкования солярной карты."""
+    try:
+        natal = calculate_natal(
+            req.birth_date, req.birth_time,
+            req.birth_latitude, req.birth_longitude,
+        )
+        solar = calculate_solar_chart(
+            natal, req.solar_year, req.solar_latitude, req.solar_longitude,
+        )
+
+        if req.mode == "short":
+            from .interpretation import generate_short_description
+            text = generate_short_description(
+                solar.planets, solar.houses.asc if solar.houses else 0,
+                solar.houses.mc if solar.houses else 0, solar.aspects,
+            )
+            return {"mode": "short", "text": text, "year": req.solar_year}
+        else:
+            from .interpretation import generate_full_description
+            text = generate_full_description(
+                solar.planets, solar.houses.asc if solar.houses else 0,
+                solar.houses.mc if solar.houses else 0, solar.aspects,
+                chart_type="solar",
+            )
+            return {"mode": "full", "text": text, "year": req.solar_year}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -452,6 +511,103 @@ async def api_search_cities(q: str = ""):
     return [c for c in cities if q_lower in c["name"].lower() or q_lower in c["country"].lower()]
 
 
+# ── Персоны ─────────────────────────────────────────────────────
+
+
+class PersonRequest(BaseModel):
+    user_id: int
+    label: str = Field("Я", description="Метка персоны: Я, Мама, Дочь и т.д.")
+    full_name: str | None = None
+    birth_date: str | None = None
+    birth_time: str | None = None
+    birth_time_accuracy: str = Field("exact", description="exact/approximate/unknown")
+    birth_place: str | None = None
+    latitude: float | None = None
+    longitude: float | None = None
+    tz_offset: float | None = None
+
+
+class PersonUpdateRequest(BaseModel):
+    label: str | None = None
+    full_name: str | None = None
+    birth_date: str | None = None
+    birth_time: str | None = None
+    birth_time_accuracy: str | None = None
+    birth_place: str | None = None
+    latitude: float | None = None
+    longitude: float | None = None
+    tz_offset: float | None = None
+
+
+class ChartRequest(BaseModel):
+    person_id: int
+    type: str = Field(..., description="natal / solar")
+    input_params: dict | None = None
+    result_data: dict | None = None
+    short_text: str | None = None
+    full_text: str | None = None
+
+
+@app.post("/api/persons")
+async def api_create_person(req: PersonRequest):
+    """Создать персону."""
+    from .database import create_person
+    try:
+        return await create_person(
+            req.user_id, req.label, req.full_name, req.birth_date, req.birth_time,
+            req.birth_time_accuracy, req.birth_place, req.latitude, req.longitude, req.tz_offset,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/users/{user_id}/persons")
+async def api_get_persons(user_id: int):
+    """Получить все персоны пользователя."""
+    from .database import get_persons
+    return await get_persons(user_id)
+
+
+@app.put("/api/persons/{person_id}")
+async def api_update_person(person_id: int, req: PersonUpdateRequest):
+    """Обновить персону."""
+    from .database import update_person
+    fields = {k: v for k, v in req.model_dump().items() if v is not None}
+    result = await update_person(person_id, **fields)
+    if not result:
+        raise HTTPException(status_code=404, detail="Персона не найдена")
+    return result
+
+
+@app.delete("/api/persons/{person_id}")
+async def api_delete_person(person_id: int):
+    """Удалить персону."""
+    from .database import delete_person
+    if not await delete_person(person_id):
+        raise HTTPException(status_code=404, detail="Персона не найдена")
+    return {"ok": True}
+
+
+@app.post("/api/charts")
+async def api_create_chart(req: ChartRequest):
+    """Сохранить расчёт карты."""
+    from .database import create_chart
+    try:
+        return await create_chart(
+            req.person_id, req.type, req.input_params,
+            req.result_data, req.short_text, req.full_text,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/persons/{person_id}/charts")
+async def api_get_charts(person_id: int, type: str | None = None):
+    """Получить расчёты персоны."""
+    from .database import get_charts
+    return await get_charts(person_id, type)
+
+
 class ChartImageRequest(BaseModel):
     birth_date: str
     birth_time: str
@@ -509,6 +665,51 @@ async def api_chart_image(req: ChartImageRequest):
         return Response(
             content=png_bytes,
             media_type="image/png",
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.post("/api/chart-svg")
+async def api_chart_svg(req: ChartImageRequest):
+    """Сгенерировать SVG колеса карты."""
+    from .chart_renderer import render_chart_svg
+    try:
+        natal = calculate_natal(
+            req.birth_date, req.birth_time,
+            req.latitude, req.longitude, req.house_system,
+        )
+
+        if req.year and req.solar_latitude and req.solar_longitude:
+            solar = calculate_solar_chart(
+                natal, req.year, req.solar_latitude, req.solar_longitude, req.house_system,
+            )
+            chart = solar
+        else:
+            chart = natal
+
+        planets_data = [
+            {"name": p.name, "longitude": p.longitude, "retrograde": p.retrograde,
+             "sign": p.sign, "sign_degree": p.sign_degree, "house": p.house}
+            for p in chart.planets
+        ]
+
+        aspects_data = [
+            {"planet1": a.planet1, "planet2": a.planet2, "aspect_type": a.aspect_type}
+            for a in chart.aspects
+        ]
+
+        svg_str = render_chart_svg(
+            planets=planets_data,
+            cusps=chart.houses.cusps,
+            asc=chart.houses.asc,
+            mc=chart.houses.mc,
+            aspects=aspects_data,
+        )
+
+        return Response(
+            content=svg_str.encode("utf-8"),
+            media_type="image/svg+xml",
         )
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

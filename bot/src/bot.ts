@@ -60,7 +60,7 @@ export const fullDescKeyboard = Keyboard.inlineKeyboard([
 ]);
 
 // Сферы для лучшего места
-const sphereKeyboard = Keyboard.inlineKeyboard([
+export const sphereKeyboard = Keyboard.inlineKeyboard([
   [
     Keyboard.button.callback('Карьера', 'sphere:career'),
     Keyboard.button.callback('Любовь', 'sphere:love'),
@@ -126,7 +126,7 @@ export function parseDate(text: string): string | null {
     year = year <= 30 ? 2000 + year : 1900 + year;
   }
 
-  if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1920 || year > 2030) return null;
+  if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2100) return null;
   return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 }
 
@@ -215,15 +215,23 @@ export async function getCitySuggestions(query: string): Promise<string[]> {
 // ── Обработчики диалога ──────────────────────────────────────────
 
 export function getUserId(ctx: any): number {
-  return (
-    ctx.message?.sender?.user_id ||
-    ctx.message?.sender_id ||
-    ctx.user?.user_id ||
-    ctx.callback?.user_id ||
-    ctx.callback?.from?.user_id ||
-    ctx.from?.user_id ||
-    0
-  );
+  // MAX Bot API: для callback'ов пользователь в ctx.user (SDK берёт из update.callback.user)
+  // Для сообщений — в ctx.message.sender.user_id
+  const id =
+    ctx.user?.user_id ??
+    ctx.message?.sender?.user_id ??
+    ctx.message?.sender_id ??
+    0;
+
+  if (!id) {
+    console.warn('[getUserId] Не удалось определить userId. ctx keys:', Object.keys(ctx));
+    if (ctx.update) {
+      console.warn('[getUserId] update type:', ctx.update.update_type);
+      console.warn('[getUserId] update.callback:', JSON.stringify(ctx.update.callback)?.slice(0, 200));
+    }
+  }
+
+  return id;
 }
 
 export async function handleStart(ctx: any, userId: number, userName?: string): Promise<void> {
@@ -236,9 +244,11 @@ export async function handleStart(ctx: any, userId: number, userName?: string): 
   // Проверяем, есть ли сохранённые профили
   const profiles = await api.getProfiles(userId);
 
-  let greeting = '✨ Добро пожаловать в Соляр! ✨\n\n';
+  let greeting = '';
   if (firstName) {
-    greeting = `✨ Добро пожаловать, ${firstName}! ✨\n\n`;
+    greeting = `Привет, ${firstName}!\n\n`;
+  } else {
+    greeting = 'Добро пожаловать!\n\n';
   }
 
   greeting += 'Я помогу рассчитать:\n';
@@ -247,13 +257,14 @@ export async function handleStart(ctx: any, userId: number, userName?: string): 
   greeting += '• Лучшее место — где встретить день рождения\n';
 
   if (profiles.length > 0) {
-    greeting += '\n📁 Ваши профили:\n';
+    greeting += '\nВаши профили:\n';
     profiles.forEach((p: any) => {
-      greeting += `• ${p.label}: ${p.birth_date || '—'}\n`;
+      greeting += `• ${p.label}: ${p.birth_date || '—'} ${p.birth_time || ''}\n`;
     });
+    greeting += '\nВыберите действие:';
+  } else {
+    greeting += '\nДля начала мне понадобятся ваши данные рождения.';
   }
-
-  greeting += '\nВыберите действие:';
 
   ctx.reply(greeting, { attachments: [startKeyboard] });
 }
@@ -691,18 +702,14 @@ const PLANET_NAMES_RU: Record<string, string> = {
 
 export async function showShortDescription(ctx: any, data: Record<string, any>, userId: number): Promise<void> {
   try {
-    const interp = await api.getInterpretations({
+    const result = await api.getInterpretations({
       birth_date: data.birthDate,
       birth_time: data.birthTime,
       latitude: data.birthLat,
       longitude: data.birthLon,
     }, 'short');
 
-    const text = interp.map((i: any) => {
-      const name = PLANET_NAMES_RU[i.planet] || i.planet;
-      return `${name} (${i.house}-й дом, ${i.sign}): ${i.text}`;
-    }).join('\n\n');
-
+    const text = result.text || 'Не удалось сгенерировать описание.';
     ctx.reply(`Краткое описание натальной карты:\n\n${text}`, { attachments: [natalResultKeyboard] });
   } catch (err: any) {
     console.error('[desc] Ошибка:', err.message);
@@ -712,18 +719,14 @@ export async function showShortDescription(ctx: any, data: Record<string, any>, 
 
 export async function showFullDescription(ctx: any, data: Record<string, any>, userId: number): Promise<void> {
   try {
-    const interp = await api.getInterpretations({
+    const result = await api.getInterpretations({
       birth_date: data.birthDate,
       birth_time: data.birthTime,
       latitude: data.birthLat,
       longitude: data.birthLon,
     }, 'full');
 
-    const text = interp.map((i: any) => {
-      const name = PLANET_NAMES_RU[i.planet] || i.planet;
-      return `${name} в ${i.house}-м доме (${i.sign}):\n${i.text}`;
-    }).join('\n\n');
-
+    const text = result.text || 'Не удалось сгенерировать описание.';
     ctx.reply(`Полное описание натальной карты:\n\n${text}`, { attachments: [natalResultKeyboard] });
   } catch (err: any) {
     console.error('[desc] Ошибка:', err.message);
@@ -733,30 +736,44 @@ export async function showFullDescription(ctx: any, data: Record<string, any>, u
 
 export async function downloadFullDescription(ctx: any, data: Record<string, any>, userId: number): Promise<void> {
   try {
-    const interp = await api.getInterpretations({
+    const result = await api.getInterpretations({
       birth_date: data.birthDate,
       birth_time: data.birthTime,
       latitude: data.birthLat,
       longitude: data.birthLon,
     }, 'full');
 
-    const text = interp.map((i: any) => {
-      const name = PLANET_NAMES_RU[i.planet] || i.planet;
-      return `${name} в ${i.house}-м доме (${i.sign}):\n${i.text}`;
-    }).join('\n\n');
-
+    const text = result.text || 'Не удалось сгенерировать описание.';
     const header = `Натальная карта\nДата: ${data.birthDate} ${data.birthTime}\nГород: ${data.birthCity || ''}\n\n`;
     const fullText = header + text;
-    const buffer = Buffer.from(fullText, 'utf-8');
 
-    // Отправляем как текстовый файл
-    const fileName = `natal_${data.birthDate}.txt`;
+    // Генерируем PDF через Core API
     try {
-      const file = await ctx.api.uploadFile({ source: buffer, filename: fileName });
-      await ctx.reply('Файл с описанием:', { attachments: [file.toJson()] });
+      const pdfResponse = await require('axios').post(
+        `${process.env.CORE_API_URL || 'http://localhost:8000'}/api/generate-pdf`,
+        {
+          natal: {
+            birth_date: data.birthDate,
+            birth_time: data.birthTime,
+            latitude: data.birthLat,
+            longitude: data.birthLon,
+          },
+          mode: 'full',
+        },
+        { responseType: 'arraybuffer' }
+      );
+      const buffer = Buffer.from(pdfResponse.data);
+      const file = await ctx.api.uploadFile({ source: buffer, filename: `natal_${data.birthDate}.pdf` });
+      await ctx.reply('PDF с полным описанием:', { attachments: [file.toJson()] });
     } catch {
-      // Fallback — если uploadFile не поддерживается, выводим на экран
-      await ctx.reply(fullText, { attachments: [natalResultKeyboard] });
+      // Fallback — если PDF не сгенерировался, отправляем текст
+      const buffer = Buffer.from(fullText, 'utf-8');
+      try {
+        const file = await ctx.api.uploadFile({ source: buffer, filename: `natal_${data.birthDate}.txt` });
+        await ctx.reply('Файл с описанием:', { attachments: [file.toJson()] });
+      } catch {
+        await ctx.reply(fullText, { attachments: [natalResultKeyboard] });
+      }
     }
   } catch (err: any) {
     console.error('[desc] Ошибка:', err.message);

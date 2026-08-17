@@ -48,6 +48,12 @@ def _deg_to_rad(deg: float) -> float:
     return (deg - 90) * math.pi / 180
 
 
+def _hex_to_rgb(hex_str: str) -> tuple[int, int, int]:
+    """Конвертировать hex-строку '#RRGGBB' в кортеж (r, g, b)."""
+    hex_str = hex_str.lstrip('#')
+    return (int(hex_str[0:2], 16), int(hex_str[2:4], 16), int(hex_str[4:6], 16))
+
+
 def render_chart_svg(
     planets: list[dict],
     cusps: list[float],
@@ -250,7 +256,7 @@ def render_chart_png(planets: list[dict], cusps: list[float], asc: float, mc: fl
         r_mid = (r_outer + r_signs) / 2
         x = int(cx + r_mid * math.cos(mid_angle))
         y = int(cy + r_mid * math.sin(mid_angle))
-        draw.text((x - 6, y - 8), SIGNS[i], fill=SIGN_COLORS[i])
+        draw.text((x - 6, y - 8), SIGNS[i], fill=_hex_to_rgb(SIGN_COLORS[i]))
 
     # Куспиды домов
     for i, cusp in enumerate(cusps):
@@ -290,7 +296,7 @@ def render_chart_png(planets: list[dict], cusps: list[float], asc: float, mc: fl
             asp_type = asp.get("aspect_type", "")
             if p1_name not in planet_map or p2_name not in planet_map:
                 continue
-            color = ASPECT_COLORS.get(asp_type, "#CCCCCC")
+            color = _hex_to_rgb(ASPECT_COLORS.get(asp_type, "#CCCCCC"))
             w = int(ASPECT_WIDTHS.get(asp_type, 1))
             angle1 = _deg_to_rad(planet_map[p1_name])
             angle2 = _deg_to_rad(planet_map[p2_name])
