@@ -6,6 +6,23 @@ import math
 import io
 from xml.etree.ElementTree import Element, SubElement, tostring
 
+# Цвета аспектов
+ASPECT_COLORS = {
+    "conjunction": "#FFD700",  # золотой
+    "sextile": "#44AA44",      # зелёный
+    "square": "#FF4444",       # красный
+    "trine": "#4488FF",        # синий
+    "opposition": "#FF4444",   # красный
+}
+
+ASPECT_WIDTHS = {
+    "conjunction": 2,
+    "sextile": 1,
+    "square": 2,
+    "trine": 2,
+    "opposition": 2,
+}
+
 # Знаки зодиака
 SIGNS = [
     "♈", "♉", "♊", "♋", "♌", "♍",
@@ -38,6 +55,7 @@ def render_chart_svg(
     mc: float,
     width: int = 500,
     height: int = 500,
+    aspects: list[dict] | None = None,
 ) -> str:
     """Сгенерировать SVG-колесо карты.
 
@@ -139,6 +157,26 @@ def render_chart_svg(
                    fill="#C00",
                    **{"text-anchor": "middle", "font-size": "11", "font-weight": "bold"}).text = label
 
+    # Аспектные линии
+    if aspects:
+        planet_map = {p["name"]: p["longitude"] for p in planets}
+        for asp in aspects:
+            p1_name = asp.get("planet1", "")
+            p2_name = asp.get("planet2", "")
+            asp_type = asp.get("aspect_type", "")
+            if p1_name not in planet_map or p2_name not in planet_map:
+                continue
+            color = ASPECT_COLORS.get(asp_type, "#CCCCCC")
+            sw = ASPECT_WIDTHS.get(asp_type, 1)
+            angle1 = _deg_to_rad(planet_map[p1_name])
+            angle2 = _deg_to_rad(planet_map[p2_name])
+            x1 = cx + r_inner * math.cos(angle1)
+            y1 = cy + r_inner * math.sin(angle1)
+            x2 = cx + r_inner * math.cos(angle2)
+            y2 = cy + r_inner * math.sin(angle2)
+            SubElement(svg, "line", x1=str(x1), y1=str(y1), x2=str(x2), y2=str(y2),
+                       stroke=color, **{"stroke-width": str(sw), "stroke-dasharray": "4,2"})
+
     # Планеты — размещаем без наложений
     placed = _place_planets(planets, r_planets)
 
@@ -178,7 +216,7 @@ def _place_planets(planets: list[dict], base_r: float) -> list[dict]:
     return result
 
 
-def render_chart_png(planets: list[dict], cusps: list[float], asc: float, mc: float) -> bytes:
+def render_chart_png(planets: list[dict], cusps: list[float], asc: float, mc: float, aspects: list[dict] | None = None) -> bytes:
     """Сгенерировать PNG колеса карты через Pillow."""
     from PIL import Image, ImageDraw, ImageFont
 
@@ -242,6 +280,25 @@ def render_chart_png(planets: list[dict], cusps: list[float], asc: float, mc: fl
         lx = int(cx + (r_outer + 12) * math.cos(angle))
         ly = int(cy + (r_outer + 12) * math.sin(angle))
         draw.text((lx - 10, ly - 6), label, fill="red")
+
+    # Аспектные линии
+    if aspects:
+        planet_map = {p["name"]: p["longitude"] for p in planets}
+        for asp in aspects:
+            p1_name = asp.get("planet1", "")
+            p2_name = asp.get("planet2", "")
+            asp_type = asp.get("aspect_type", "")
+            if p1_name not in planet_map or p2_name not in planet_map:
+                continue
+            color = ASPECT_COLORS.get(asp_type, "#CCCCCC")
+            w = int(ASPECT_WIDTHS.get(asp_type, 1))
+            angle1 = _deg_to_rad(planet_map[p1_name])
+            angle2 = _deg_to_rad(planet_map[p2_name])
+            x1 = int(cx + r_inner * math.cos(angle1))
+            y1 = int(cy + r_inner * math.sin(angle1))
+            x2 = int(cx + r_inner * math.cos(angle2))
+            y2 = int(cy + r_inner * math.sin(angle2))
+            draw.line([(x1, y1), (x2, y2)], fill=color, width=w)
 
     # Планеты
     placed = _place_planets(planets, r_planets)

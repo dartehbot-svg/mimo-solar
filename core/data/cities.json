@@ -1,110 +1,1919 @@
 [
-  {"name": "Москва", "country": "Россия", "lat": 55.7558, "lon": 37.6173, "timezone": "Europe/Moscow", "visa_free_russia": true, "tags": ["russia", "europe"]},
-  {"name": "Санкт-Петербург", "country": "Россия", "lat": 59.9343, "lon": 30.3351, "timezone": "Europe/Moscow", "visa_free_russia": true, "tags": ["russia", "europe"]},
-  {"name": "Сочи", "country": "Россия", "lat": 43.6028, "lon": 39.7342, "timezone": "Europe/Moscow", "visa_free_russia": true, "tags": ["russia", "europe", "resort"]},
-  {"name": "Казань", "country": "Россия", "lat": 55.7887, "lon": 49.1221, "timezone": "Europe/Moscow", "visa_free_russia": true, "tags": ["russia", "europe"]},
-  {"name": "Екатеринбург", "country": "Россия", "lat": 56.8389, "lon": 60.6057, "timezone": "Asia/Yekaterinburg", "visa_free_russia": true, "tags": ["russia", "asia"]},
-  {"name": "Новосибирск", "country": "Россия", "lat": 55.0084, "lon": 82.9357, "timezone": "Asia/Novosibirsk", "visa_free_russia": true, "tags": ["russia", "asia"]},
-  {"name": "Калининград", "country": "Россия", "lat": 54.7104, "lon": 20.4522, "timezone": "Europe/Kaliningrad", "visa_free_russia": true, "tags": ["russia", "europe"]},
-
-  {"name": "Стамбул", "country": "Турция", "lat": 41.0082, "lon": 28.9784, "timezone": "Europe/Istanbul", "visa_free_russia": true, "tags": ["europe", "asia", "resort"]},
-  {"name": "Анталья", "country": "Турция", "lat": 36.8969, "lon": 30.7133, "timezone": "Europe/Istanbul", "visa_free_russia": true, "tags": ["europe", "resort"]},
-  {"name": "Аланья", "country": "Турция", "lat": 36.5437, "lon": 31.9930, "timezone": "Europe/Istanbul", "visa_free_russia": true, "tags": ["europe", "resort"]},
-
-  {"name": "Дубай", "country": "ОАЭ", "lat": 25.2048, "lon": 55.2708, "timezone": "Asia/Dubai", "visa_free_russia": true, "tags": ["asia", "luxury"]},
-  {"name": "Абу-Даби", "country": "ОАЭ", "lat": 24.4539, "lon": 54.3773, "timezone": "Asia/Dubai", "visa_free_russia": true, "tags": ["asia", "luxury"]},
-
-  {"name": "Бангкок", "country": "Таиланд", "lat": 13.7563, "lon": 100.5018, "timezone": "Asia/Bangkok", "visa_free_russia": true, "tags": ["asia", "resort"]},
-  {"name": "Пхукет", "country": "Таиланд", "lat": 7.8804, "lon": 98.3923, "timezone": "Asia/Bangkok", "visa_free_russia": true, "tags": ["asia", "resort"]},
-  {"name": "Паттайя", "country": "Таиланд", "lat": 12.9236, "lon": 100.8825, "timezone": "Asia/Bangkok", "visa_free_russia": true, "tags": ["asia", "resort"]},
-
-  {"name": "Бали (Денпасар)", "country": "Индонезия", "lat": -8.6500, "lon": 115.2167, "timezone": "Asia/Makassar", "visa_free_russia": true, "tags": ["asia", "resort"]},
-
-  {"name": "Ханой", "country": "Вьетнам", "lat": 21.0285, "lon": 105.8542, "timezone": "Asia/Ho_Chi_Minh", "visa_free_russia": true, "tags": ["asia"]},
-  {"name": "Дананг", "country": "Вьетнам", "lat": 16.0544, "lon": 108.2022, "timezone": "Asia/Ho_Chi_Minh", "visa_free_russia": true, "tags": ["asia", "resort"]},
-
-  {"name": "Пномпень", "country": "Камбоджа", "lat": 11.5564, "lon": 104.9282, "timezone": "Asia/Phnom_Penh", "visa_free_russia": true, "tags": ["asia"]},
-
-  {"name": "Коломбо", "country": "Шри-Ланка", "lat": 6.9271, "lon": 79.8612, "timezone": "Asia/Colombo", "visa_free_russia": true, "tags": ["asia", "resort"]},
-
-  {"name": "Мале", "country": "Мальдивы", "lat": 4.1755, "lon": 73.5093, "timezone": "Indian/Maldives", "visa_free_russia": true, "tags": ["asia", "resort", "luxury"]},
-
-  {"name": "Белград", "country": "Сербия", "lat": 44.7866, "lon": 20.4489, "timezone": "Europe/Belgrade", "visa_free_russia": true, "tags": ["europe"]},
-  {"name": "Подгорица", "country": "Черногория", "lat": 42.4304, "lon": 19.2594, "timezone": "Europe/Podgorica", "visa_free_russia": true, "tags": ["europe", "resort"]},
-  {"name": "Будва", "country": "Черногория", "lat": 42.2894, "lon": 18.8397, "timezone": "Europe/Podgorica", "visa_free_russia": true, "tags": ["europe", "resort"]},
-
-  {"name": "Тбилиси", "country": "Грузия", "lat": 41.7151, "lon": 44.8271, "timezone": "Asia/Tbilisi", "visa_free_russia": true, "tags": ["europe", "asia"]},
-  {"name": "Батуми", "country": "Грузия", "lat": 41.6168, "lon": 41.6367, "timezone": "Asia/Tbilisi", "visa_free_russia": true, "tags": ["europe", "resort"]},
-
-  {"name": "Ереван", "country": "Армения", "lat": 40.1792, "lon": 44.4991, "timezone": "Asia/Yerevan", "visa_free_russia": true, "tags": ["europe", "asia"]},
-
-  {"name": "Баку", "country": "Азербайджан", "lat": 40.4093, "lon": 49.8671, "timezone": "Asia/Baku", "visa_free_russia": true, "tags": ["europe", "asia"]},
-
-  {"name": "Ташкент", "country": "Узбекистан", "lat": 41.2995, "lon": 69.2401, "timezone": "Asia/Tashkent", "visa_free_russia": true, "tags": ["asia"]},
-
-  {"name": "Алматы", "country": "Казахстан", "lat": 43.2220, "lon": 76.8512, "timezone": "Asia/Almaty", "visa_free_russia": true, "tags": ["asia"]},
-  {"name": "Астана", "country": "Казахстан", "lat": 51.1694, "lon": 71.4491, "timezone": "Asia/Almaty", "visa_free_russia": true, "tags": ["asia"]},
-
-  {"name": "Бишкек", "country": "Кыргызстан", "lat": 42.8746, "lon": 74.5698, "timezone": "Asia/Bishkek", "visa_free_russia": true, "tags": ["asia"]},
-
-  {"name": "Париж", "country": "Франция", "lat": 48.8566, "lon": 2.3522, "timezone": "Europe/Paris", "visa_free_russia": false, "tags": ["europe"]},
-  {"name": "Лондон", "country": "Великобритания", "lat": 51.5074, "lon": -0.1278, "timezone": "Europe/London", "visa_free_russia": false, "tags": ["europe"]},
-  {"name": "Рим", "country": "Италия", "lat": 41.9028, "lon": 12.4964, "timezone": "Europe/Rome", "visa_free_russia": false, "tags": ["europe"]},
-  {"name": "Барселона", "country": "Испания", "lat": 41.3851, "lon": 2.1734, "timezone": "Europe/Madrid", "visa_free_russia": false, "tags": ["europe", "resort"]},
-  {"name": "Берлин", "country": "Германия", "lat": 52.5200, "lon": 13.4050, "timezone": "Europe/Berlin", "visa_free_russia": false, "tags": ["europe"]},
-  {"name": "Прага", "country": "Чехия", "lat": 50.0755, "lon": 14.4378, "timezone": "Europe/Prague", "visa_free_russia": false, "tags": ["europe"]},
-  {"name": "Вена", "country": "Австрия", "lat": 48.2082, "lon": 16.3738, "timezone": "Europe/Vienna", "visa_free_russia": false, "tags": ["europe"]},
-  {"name": "Амстердам", "country": "Нидерланды", "lat": 52.3676, "lon": 4.9041, "timezone": "Europe/Amsterdam", "visa_free_russia": false, "tags": ["europe"]},
-
-  {"name": "Нью-Йорк", "country": "США", "lat": 40.7128, "lon": -74.0060, "timezone": "America/New_York", "visa_free_russia": false, "tags": ["america"]},
-  {"name": "Майами", "country": "США", "lat": 25.7617, "lon": -80.1918, "timezone": "America/New_York", "visa_free_russia": false, "tags": ["america", "resort"]},
-  {"name": "Лос-Анджелес", "country": "США", "lat": 34.0522, "lon": -118.2437, "timezone": "America/Los_Angeles", "visa_free_russia": false, "tags": ["america"]},
-
-  {"name": "Канкун", "country": "Мексика", "lat": 21.1619, "lon": -86.8515, "timezone": "America/Cancun", "visa_free_russia": true, "tags": ["america", "resort"]},
-
-  {"name": "Гавана", "country": "Куба", "lat": 23.1136, "lon": -82.3666, "timezone": "America/Havana", "visa_free_russia": true, "tags": ["america", "resort"]},
-
-  {"name": "Каир", "country": "Египет", "lat": 30.0444, "lon": 31.2357, "timezone": "Africa/Cairo", "visa_free_russia": true, "tags": ["africa", "resort"]},
-  {"name": "Хургада", "country": "Египет", "lat": 27.2578, "lon": 33.8117, "timezone": "Africa/Cairo", "visa_free_russia": true, "tags": ["africa", "resort"]},
-  {"name": "Шарм-эль-Шейх", "country": "Египет", "lat": 27.9158, "lon": 34.3300, "timezone": "Africa/Cairo", "visa_free_russia": true, "tags": ["africa", "resort"]},
-
-  {"name": "Измир", "country": "Турция", "lat": 38.4189, "lon": 27.1287, "timezone": "Europe/Istanbul", "visa_free_russia": true, "tags": ["europe", "resort"]},
-  {"name": "Бодрум", "country": "Турция", "lat": 37.0344, "lon": 27.4305, "timezone": "Europe/Istanbul", "visa_free_russia": true, "tags": ["europe", "resort"]},
-
-  {"name": "Токио", "country": "Япония", "lat": 35.6762, "lon": 139.6503, "timezone": "Asia/Tokyo", "visa_free_russia": false, "tags": ["asia"]},
-  {"name": "Сеул", "country": "Южная Корея", "lat": 37.5665, "lon": 126.9780, "timezone": "Asia/Seoul", "visa_free_russia": false, "tags": ["asia"]},
-  {"name": "Пекин", "country": "Китай", "lat": 39.9042, "lon": 116.4074, "timezone": "Asia/Shanghai", "visa_free_russia": false, "tags": ["asia"]},
-  {"name": "Шанхай", "country": "Китай", "lat": 31.2304, "lon": 121.4737, "timezone": "Asia/Shanghai", "visa_free_russia": false, "tags": ["asia"]},
-
-  {"name": "Дели", "country": "Индия", "lat": 28.7041, "lon": 77.1025, "timezone": "Asia/Kolkata", "visa_free_russia": false, "tags": ["asia"]},
-  {"name": "Гоа", "country": "Индия", "lat": 15.2993, "lon": 74.1240, "timezone": "Asia/Kolkata", "visa_free_russia": false, "tags": ["asia", "resort"]},
-
-  {"name": "Мехико", "country": "Мексика", "lat": 19.4326, "lon": -99.1332, "timezone": "America/Mexico_City", "visa_free_russia": true, "tags": ["america"]},
-  {"name": "Буэнос-Айрес", "country": "Аргентина", "lat": -34.6037, "lon": -58.3816, "timezone": "America/Argentina/Buenos_Aires", "visa_free_russia": false, "tags": ["america"]},
-  {"name": "Рио-де-Жанейро", "country": "Бразилия", "lat": -22.9068, "lon": -43.1729, "timezone": "America/Sao_Paulo", "visa_free_russia": false, "tags": ["america", "resort"]},
-
-  {"name": "Кейптаун", "country": "ЮАР", "lat": -33.9249, "lon": 18.4241, "timezone": "Africa/Johannesburg", "visa_free_russia": false, "tags": ["africa"]},
-  {"name": "Марракеш", "country": "Марокко", "lat": 31.6295, "lon": -7.9811, "timezone": "Africa/Casablanca", "visa_free_russia": true, "tags": ["africa"]},
-
-  {"name": "Тель-Авив", "country": "Израиль", "lat": 32.0853, "lon": 34.7818, "timezone": "Asia/Jerusalem", "visa_free_russia": true, "tags": ["asia", "resort"]},
-
-  {"name": "Доха", "country": "Катар", "lat": 25.2854, "lon": 51.5310, "timezone": "Asia/Qatar", "visa_free_russia": true, "tags": ["asia", "luxury"]},
-
-  {"name": "Куала-Лумпур", "country": "Малайзия", "lat": 3.1390, "lon": 101.6869, "timezone": "Asia/Kuala_Lumpur", "visa_free_russia": true, "tags": ["asia"]},
-  {"name": "Сингапур", "country": "Сингапур", "lat": 1.3521, "lon": 103.8198, "timezone": "Asia/Singapore", "visa_free_russia": true, "tags": ["asia", "luxury"]},
-
-  {"name": "Гонконг", "country": "Гонконг", "lat": 22.3193, "lon": 114.1694, "timezone": "Asia/Hong_Kong", "visa_free_russia": false, "tags": ["asia"]},
-
-  {"name": "Манила", "country": "Филиппины", "lat": 14.5995, "lon": 120.9842, "timezone": "Asia/Manila", "visa_free_russia": true, "tags": ["asia", "resort"]},
-
-  {"name": "Катманду", "country": "Непал", "lat": 27.7172, "lon": 85.3240, "timezone": "Asia/Kathmandu", "visa_free_russia": true, "tags": ["asia"]},
-
-  {"name": "Улан-Батор", "country": "Монголия", "lat": 47.8864, "lon": 106.9057, "timezone": "Asia/Ulaanbaatar", "visa_free_russia": true, "tags": ["asia"]},
-
-  {"name": "Хельсинки", "country": "Финляндия", "lat": 60.1699, "lon": 24.9384, "timezone": "Europe/Helsinki", "visa_free_russia": false, "tags": ["europe"]},
-  {"name": "Таллин", "country": "Эстония", "lat": 59.4370, "lon": 24.7536, "timezone": "Europe/Tallinn", "visa_free_russia": false, "tags": ["europe"]},
-  {"name": "Рига", "country": "Латвия", "lat": 56.9496, "lon": 24.1052, "timezone": "Europe/Riga", "visa_free_russia": false, "tags": ["europe"]},
-  {"name": "Вильнюс", "country": "Литва", "lat": 54.6872, "lon": 25.2797, "timezone": "Europe/Vilnius", "visa_free_russia": false, "tags": ["europe"]},
-  {"name": "Варшава", "country": "Польша", "lat": 52.2297, "lon": 21.0122, "timezone": "Europe/Warsaw", "visa_free_russia": false, "tags": ["europe"]},
-  {"name": "Будапешт", "country": "Венгрия", "lat": 47.4979, "lon": 19.0402, "timezone": "Europe/Budapest", "visa_free_russia": false, "tags": ["europe"]}
+  {
+    "name": "Москва",
+    "country": "Россия",
+    "lat": 55.7558,
+    "lon": 37.6173,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe"
+    ]
+  },
+  {
+    "name": "Санкт-Петербург",
+    "country": "Россия",
+    "lat": 59.9343,
+    "lon": 30.3351,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe"
+    ]
+  },
+  {
+    "name": "Сочи",
+    "country": "Россия",
+    "lat": 43.6028,
+    "lon": 39.7342,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Казань",
+    "country": "Россия",
+    "lat": 55.7887,
+    "lon": 49.1221,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe"
+    ]
+  },
+  {
+    "name": "Екатеринбург",
+    "country": "Россия",
+    "lat": 56.8389,
+    "lon": 60.6057,
+    "timezone": "Asia/Yekaterinburg",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "asia"
+    ]
+  },
+  {
+    "name": "Новосибирск",
+    "country": "Россия",
+    "lat": 55.0084,
+    "lon": 82.9357,
+    "timezone": "Asia/Novosibirsk",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "asia"
+    ]
+  },
+  {
+    "name": "Калининград",
+    "country": "Россия",
+    "lat": 54.7104,
+    "lon": 20.4522,
+    "timezone": "Europe/Kaliningrad",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe"
+    ]
+  },
+  {
+    "name": "Стамбул",
+    "country": "Турция",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "timezone": "Europe/Istanbul",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Анталья",
+    "country": "Турция",
+    "lat": 36.8969,
+    "lon": 30.7133,
+    "timezone": "Europe/Istanbul",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Аланья",
+    "country": "Турция",
+    "lat": 36.5437,
+    "lon": 31.993,
+    "timezone": "Europe/Istanbul",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Дубай",
+    "country": "ОАЭ",
+    "lat": 25.2048,
+    "lon": 55.2708,
+    "timezone": "Asia/Dubai",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "luxury"
+    ]
+  },
+  {
+    "name": "Абу-Даби",
+    "country": "ОАЭ",
+    "lat": 24.4539,
+    "lon": 54.3773,
+    "timezone": "Asia/Dubai",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "luxury"
+    ]
+  },
+  {
+    "name": "Бангкок",
+    "country": "Таиланд",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "timezone": "Asia/Bangkok",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Пхукет",
+    "country": "Таиланд",
+    "lat": 7.8804,
+    "lon": 98.3923,
+    "timezone": "Asia/Bangkok",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Паттайя",
+    "country": "Таиланд",
+    "lat": 12.9236,
+    "lon": 100.8825,
+    "timezone": "Asia/Bangkok",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Бали (Денпасар)",
+    "country": "Индонезия",
+    "lat": -8.65,
+    "lon": 115.2167,
+    "timezone": "Asia/Makassar",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Ханой",
+    "country": "Вьетнам",
+    "lat": 21.0285,
+    "lon": 105.8542,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Дананг",
+    "country": "Вьетнам",
+    "lat": 16.0544,
+    "lon": 108.2022,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Пномпень",
+    "country": "Камбоджа",
+    "lat": 11.5564,
+    "lon": 104.9282,
+    "timezone": "Asia/Phnom_Penh",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Коломбо",
+    "country": "Шри-Ланка",
+    "lat": 6.9271,
+    "lon": 79.8612,
+    "timezone": "Asia/Colombo",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Мале",
+    "country": "Мальдивы",
+    "lat": 4.1755,
+    "lon": 73.5093,
+    "timezone": "Indian/Maldives",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort",
+      "luxury"
+    ]
+  },
+  {
+    "name": "Белград",
+    "country": "Сербия",
+    "lat": 44.7866,
+    "lon": 20.4489,
+    "timezone": "Europe/Belgrade",
+    "visa_free_russia": true,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Подгорица",
+    "country": "Черногория",
+    "lat": 42.4304,
+    "lon": 19.2594,
+    "timezone": "Europe/Podgorica",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Будва",
+    "country": "Черногория",
+    "lat": 42.2894,
+    "lon": 18.8397,
+    "timezone": "Europe/Podgorica",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Тбилиси",
+    "country": "Грузия",
+    "lat": 41.7151,
+    "lon": 44.8271,
+    "timezone": "Asia/Tbilisi",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "asia"
+    ]
+  },
+  {
+    "name": "Батуми",
+    "country": "Грузия",
+    "lat": 41.6168,
+    "lon": 41.6367,
+    "timezone": "Asia/Tbilisi",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Ереван",
+    "country": "Армения",
+    "lat": 40.1792,
+    "lon": 44.4991,
+    "timezone": "Asia/Yerevan",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "asia"
+    ]
+  },
+  {
+    "name": "Баку",
+    "country": "Азербайджан",
+    "lat": 40.4093,
+    "lon": 49.8671,
+    "timezone": "Asia/Baku",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "asia"
+    ]
+  },
+  {
+    "name": "Ташкент",
+    "country": "Узбекистан",
+    "lat": 41.2995,
+    "lon": 69.2401,
+    "timezone": "Asia/Tashkent",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Алматы",
+    "country": "Казахстан",
+    "lat": 43.222,
+    "lon": 76.8512,
+    "timezone": "Asia/Almaty",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Астана",
+    "country": "Казахстан",
+    "lat": 51.1694,
+    "lon": 71.4491,
+    "timezone": "Asia/Almaty",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Бишкек",
+    "country": "Кыргызстан",
+    "lat": 42.8746,
+    "lon": 74.5698,
+    "timezone": "Asia/Bishkek",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Париж",
+    "country": "Франция",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "timezone": "Europe/Paris",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Лондон",
+    "country": "Великобритания",
+    "lat": 51.5074,
+    "lon": -0.1278,
+    "timezone": "Europe/London",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Рим",
+    "country": "Италия",
+    "lat": 41.9028,
+    "lon": 12.4964,
+    "timezone": "Europe/Rome",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Барселона",
+    "country": "Испания",
+    "lat": 41.3851,
+    "lon": 2.1734,
+    "timezone": "Europe/Madrid",
+    "visa_free_russia": false,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Берлин",
+    "country": "Германия",
+    "lat": 52.52,
+    "lon": 13.405,
+    "timezone": "Europe/Berlin",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Прага",
+    "country": "Чехия",
+    "lat": 50.0755,
+    "lon": 14.4378,
+    "timezone": "Europe/Prague",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Вена",
+    "country": "Австрия",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "timezone": "Europe/Vienna",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Амстердам",
+    "country": "Нидерланды",
+    "lat": 52.3676,
+    "lon": 4.9041,
+    "timezone": "Europe/Amsterdam",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Нью-Йорк",
+    "country": "США",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "timezone": "America/New_York",
+    "visa_free_russia": false,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Майами",
+    "country": "США",
+    "lat": 25.7617,
+    "lon": -80.1918,
+    "timezone": "America/New_York",
+    "visa_free_russia": false,
+    "tags": [
+      "america",
+      "resort"
+    ]
+  },
+  {
+    "name": "Лос-Анджелес",
+    "country": "США",
+    "lat": 34.0522,
+    "lon": -118.2437,
+    "timezone": "America/Los_Angeles",
+    "visa_free_russia": false,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Канкун",
+    "country": "Мексика",
+    "lat": 21.1619,
+    "lon": -86.8515,
+    "timezone": "America/Cancun",
+    "visa_free_russia": true,
+    "tags": [
+      "america",
+      "resort"
+    ]
+  },
+  {
+    "name": "Гавана",
+    "country": "Куба",
+    "lat": 23.1136,
+    "lon": -82.3666,
+    "timezone": "America/Havana",
+    "visa_free_russia": true,
+    "tags": [
+      "america",
+      "resort"
+    ]
+  },
+  {
+    "name": "Каир",
+    "country": "Египет",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "timezone": "Africa/Cairo",
+    "visa_free_russia": true,
+    "tags": [
+      "africa",
+      "resort"
+    ]
+  },
+  {
+    "name": "Хургада",
+    "country": "Египет",
+    "lat": 27.2578,
+    "lon": 33.8117,
+    "timezone": "Africa/Cairo",
+    "visa_free_russia": true,
+    "tags": [
+      "africa",
+      "resort"
+    ]
+  },
+  {
+    "name": "Шарм-эль-Шейх",
+    "country": "Египет",
+    "lat": 27.9158,
+    "lon": 34.33,
+    "timezone": "Africa/Cairo",
+    "visa_free_russia": true,
+    "tags": [
+      "africa",
+      "resort"
+    ]
+  },
+  {
+    "name": "Измир",
+    "country": "Турция",
+    "lat": 38.4189,
+    "lon": 27.1287,
+    "timezone": "Europe/Istanbul",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Бодрум",
+    "country": "Турция",
+    "lat": 37.0344,
+    "lon": 27.4305,
+    "timezone": "Europe/Istanbul",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Токио",
+    "country": "Япония",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "timezone": "Asia/Tokyo",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Сеул",
+    "country": "Южная Корея",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "timezone": "Asia/Seoul",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Пекин",
+    "country": "Китай",
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "timezone": "Asia/Shanghai",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Шанхай",
+    "country": "Китай",
+    "lat": 31.2304,
+    "lon": 121.4737,
+    "timezone": "Asia/Shanghai",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Дели",
+    "country": "Индия",
+    "lat": 28.7041,
+    "lon": 77.1025,
+    "timezone": "Asia/Kolkata",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Гоа",
+    "country": "Индия",
+    "lat": 15.2993,
+    "lon": 74.124,
+    "timezone": "Asia/Kolkata",
+    "visa_free_russia": false,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Мехико",
+    "country": "Мексика",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "timezone": "America/Mexico_City",
+    "visa_free_russia": true,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Буэнос-Айрес",
+    "country": "Аргентина",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "timezone": "America/Argentina/Buenos_Aires",
+    "visa_free_russia": false,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Рио-де-Жанейро",
+    "country": "Бразилия",
+    "lat": -22.9068,
+    "lon": -43.1729,
+    "timezone": "America/Sao_Paulo",
+    "visa_free_russia": false,
+    "tags": [
+      "america",
+      "resort"
+    ]
+  },
+  {
+    "name": "Кейптаун",
+    "country": "ЮАР",
+    "lat": -33.9249,
+    "lon": 18.4241,
+    "timezone": "Africa/Johannesburg",
+    "visa_free_russia": false,
+    "tags": [
+      "africa"
+    ]
+  },
+  {
+    "name": "Марракеш",
+    "country": "Марокко",
+    "lat": 31.6295,
+    "lon": -7.9811,
+    "timezone": "Africa/Casablanca",
+    "visa_free_russia": true,
+    "tags": [
+      "africa"
+    ]
+  },
+  {
+    "name": "Тель-Авив",
+    "country": "Израиль",
+    "lat": 32.0853,
+    "lon": 34.7818,
+    "timezone": "Asia/Jerusalem",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Доха",
+    "country": "Катар",
+    "lat": 25.2854,
+    "lon": 51.531,
+    "timezone": "Asia/Qatar",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "luxury"
+    ]
+  },
+  {
+    "name": "Куала-Лумпур",
+    "country": "Малайзия",
+    "lat": 3.139,
+    "lon": 101.6869,
+    "timezone": "Asia/Kuala_Lumpur",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Сингапур",
+    "country": "Сингапур",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "timezone": "Asia/Singapore",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "luxury"
+    ]
+  },
+  {
+    "name": "Гонконг",
+    "country": "Гонконг",
+    "lat": 22.3193,
+    "lon": 114.1694,
+    "timezone": "Asia/Hong_Kong",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Манила",
+    "country": "Филиппины",
+    "lat": 14.5995,
+    "lon": 120.9842,
+    "timezone": "Asia/Manila",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Катманду",
+    "country": "Непал",
+    "lat": 27.7172,
+    "lon": 85.324,
+    "timezone": "Asia/Kathmandu",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Улан-Батор",
+    "country": "Монголия",
+    "lat": 47.8864,
+    "lon": 106.9057,
+    "timezone": "Asia/Ulaanbaatar",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Хельсинки",
+    "country": "Финляндия",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "timezone": "Europe/Helsinki",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Таллин",
+    "country": "Эстония",
+    "lat": 59.437,
+    "lon": 24.7536,
+    "timezone": "Europe/Tallinn",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Рига",
+    "country": "Латвия",
+    "lat": 56.9496,
+    "lon": 24.1052,
+    "timezone": "Europe/Riga",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Вильнюс",
+    "country": "Литва",
+    "lat": 54.6872,
+    "lon": 25.2797,
+    "timezone": "Europe/Vilnius",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Варшава",
+    "country": "Польша",
+    "lat": 52.2297,
+    "lon": 21.0122,
+    "timezone": "Europe/Warsaw",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Будапешт",
+    "country": "Венгрия",
+    "lat": 47.4979,
+    "lon": 19.0402,
+    "timezone": "Europe/Budapest",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Владивосток",
+    "country": "Россия",
+    "lat": 43.1155,
+    "lon": 131.8855,
+    "timezone": "Asia/Vladivostok",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "asia"
+    ]
+  },
+  {
+    "name": "Красноярск",
+    "country": "Россия",
+    "lat": 56.0153,
+    "lon": 92.8932,
+    "timezone": "Asia/Krasnoyarsk",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "asia"
+    ]
+  },
+  {
+    "name": "Иркутск",
+    "country": "Россия",
+    "lat": 52.2855,
+    "lon": 104.289,
+    "timezone": "Asia/Irkutsk",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "asia"
+    ]
+  },
+  {
+    "name": "Краснодар",
+    "country": "Россия",
+    "lat": 45.0355,
+    "lon": 38.9753,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe"
+    ]
+  },
+  {
+    "name": "Нижний Новгород",
+    "country": "Россия",
+    "lat": 56.2965,
+    "lon": 43.9361,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe"
+    ]
+  },
+  {
+    "name": "Самара",
+    "country": "Россия",
+    "lat": 53.1959,
+    "lon": 50.1002,
+    "timezone": "Europe/Samara",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe"
+    ]
+  },
+  {
+    "name": "Ростов-на-Дону",
+    "country": "Россия",
+    "lat": 47.2357,
+    "lon": 39.7015,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe"
+    ]
+  },
+  {
+    "name": "Уфа",
+    "country": "Россия",
+    "lat": 54.7348,
+    "lon": 55.9579,
+    "timezone": "Asia/Yekaterinburg",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe"
+    ]
+  },
+  {
+    "name": "Пермь",
+    "country": "Россия",
+    "lat": 58.0105,
+    "lon": 56.2502,
+    "timezone": "Asia/Yekaterinburg",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe"
+    ]
+  },
+  {
+    "name": "Воронеж",
+    "country": "Россия",
+    "lat": 51.6615,
+    "lon": 39.2003,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe"
+    ]
+  },
+  {
+    "name": "Тюмень",
+    "country": "Россия",
+    "lat": 57.1553,
+    "lon": 65.5619,
+    "timezone": "Asia/Yekaterinburg",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "asia"
+    ]
+  },
+  {
+    "name": "Омск",
+    "country": "Россия",
+    "lat": 54.9893,
+    "lon": 73.3682,
+    "timezone": "Asia/Omsk",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "asia"
+    ]
+  },
+  {
+    "name": "Казбек",
+    "country": "Россия",
+    "lat": 43.0469,
+    "lon": 44.5342,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia",
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Кемер",
+    "country": "Турция",
+    "lat": 36.5978,
+    "lon": 30.5606,
+    "timezone": "Europe/Istanbul",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Мармарис",
+    "country": "Турция",
+    "lat": 36.8564,
+    "lon": 28.2711,
+    "timezone": "Europe/Istanbul",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Фетхие",
+    "country": "Турция",
+    "lat": 36.6219,
+    "lon": 29.1153,
+    "timezone": "Europe/Istanbul",
+    "visa_free_russia": true,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Чиангмай",
+    "country": "Таиланд",
+    "lat": 18.7883,
+    "lon": 98.9853,
+    "timezone": "Asia/Bangkok",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Краби",
+    "country": "Таиланд",
+    "lat": 8.0863,
+    "lon": 98.9063,
+    "timezone": "Asia/Bangkok",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Самуи",
+    "country": "Таиланд",
+    "lat": 9.512,
+    "lon": 100.0136,
+    "timezone": "Asia/Bangkok",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Хошимин",
+    "country": "Вьетнам",
+    "lat": 10.8231,
+    "lon": 106.6297,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Нячанг",
+    "country": "Вьетнам",
+    "lat": 12.2388,
+    "lon": 109.1967,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Фукуок",
+    "country": "Вьетнам",
+    "lat": 10.2899,
+    "lon": 103.984,
+    "timezone": "Asia/Ho_Chi_Minh",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Джакарта",
+    "country": "Индонезия",
+    "lat": -6.2088,
+    "lon": 106.8456,
+    "timezone": "Asia/Jakarta",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Йогьякарта",
+    "country": "Индонезия",
+    "lat": -7.7956,
+    "lon": 110.3695,
+    "timezone": "Asia/Jakarta",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Пенанг",
+    "country": "Малайзия",
+    "lat": 5.4164,
+    "lon": 100.3327,
+    "timezone": "Asia/Kuala_Lumpur",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Лангкави",
+    "country": "Малайзия",
+    "lat": 6.35,
+    "lon": 99.8,
+    "timezone": "Asia/Kuala_Lumpur",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Гуанчжоу",
+    "country": "Китай",
+    "lat": 23.1291,
+    "lon": 113.2644,
+    "timezone": "Asia/Shanghai",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Шэньчжэнь",
+    "country": "Китай",
+    "lat": 22.5431,
+    "lon": 114.0579,
+    "timezone": "Asia/Shanghai",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Хайнань",
+    "country": "Китай",
+    "lat": 19.2,
+    "lon": 109.9,
+    "timezone": "Asia/Shanghai",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Харбин",
+    "country": "Китай",
+    "lat": 45.8038,
+    "lon": 126.535,
+    "timezone": "Asia/Shanghai",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Осака",
+    "country": "Япония",
+    "lat": 34.6937,
+    "lon": 135.5023,
+    "timezone": "Asia/Tokyo",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Киото",
+    "country": "Япония",
+    "lat": 35.0116,
+    "lon": 135.7681,
+    "timezone": "Asia/Tokyo",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Пусан",
+    "country": "Южная Корея",
+    "lat": 35.1796,
+    "lon": 129.0756,
+    "timezone": "Asia/Seoul",
+    "visa_free_russia": false,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Мумбаи",
+    "country": "Индия",
+    "lat": 19.076,
+    "lon": 72.8777,
+    "timezone": "Asia/Kolkata",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Джайпур",
+    "country": "Индия",
+    "lat": 26.9124,
+    "lon": 75.7873,
+    "timezone": "Asia/Kolkata",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Агра",
+    "country": "Индия",
+    "lat": 27.1767,
+    "lon": 78.0081,
+    "timezone": "Asia/Kolkata",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Кочин",
+    "country": "Индия",
+    "lat": 9.9312,
+    "lon": 76.2673,
+    "timezone": "Asia/Kolkata",
+    "visa_free_russia": false,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Маскат",
+    "country": "Оман",
+    "lat": 23.588,
+    "lon": 58.3829,
+    "timezone": "Asia/Muscat",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "luxury"
+    ]
+  },
+  {
+    "name": "Амман",
+    "country": "Иордания",
+    "lat": 31.9454,
+    "lon": 35.9284,
+    "timezone": "Asia/Amman",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Эр-Рияд",
+    "country": "Саудовская Аравия",
+    "lat": 24.7136,
+    "lon": 46.6753,
+    "timezone": "Asia/Riyadh",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Манама",
+    "country": "Бахрейн",
+    "lat": 26.2285,
+    "lon": 50.586,
+    "timezone": "Asia/Bahrain",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Вьентьян",
+    "country": "Лаос",
+    "lat": 17.9757,
+    "lon": 102.6331,
+    "timezone": "Asia/Vientiane",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Луангпхабанг",
+    "country": "Лаос",
+    "lat": 19.8867,
+    "lon": 102.135,
+    "timezone": "Asia/Vientiane",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Янгон",
+    "country": "Мьянма",
+    "lat": 16.8661,
+    "lon": 96.1951,
+    "timezone": "Asia/Yangon",
+    "visa_free_russia": true,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Покхара",
+    "country": "Непал",
+    "lat": 28.2096,
+    "lon": 83.9856,
+    "timezone": "Asia/Kathmandu",
+    "visa_free_russia": true,
+    "tags": [
+      "asia",
+      "resort"
+    ]
+  },
+  {
+    "name": "Тайбэй",
+    "country": "Тайвань",
+    "lat": 25.033,
+    "lon": 121.5654,
+    "timezone": "Asia/Taipei",
+    "visa_free_russia": false,
+    "tags": [
+      "asia"
+    ]
+  },
+  {
+    "name": "Мадрид",
+    "country": "Испания",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "timezone": "Europe/Madrid",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Милан",
+    "country": "Италия",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "timezone": "Europe/Rome",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Флоренция",
+    "country": "Италия",
+    "lat": 43.7696,
+    "lon": 11.2558,
+    "timezone": "Europe/Rome",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Неаполь",
+    "country": "Италия",
+    "lat": 40.8518,
+    "lon": 14.2681,
+    "timezone": "Europe/Rome",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Венеция",
+    "country": "Италия",
+    "lat": 45.4408,
+    "lon": 12.3155,
+    "timezone": "Europe/Rome",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Лиссабон",
+    "country": "Португалия",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "timezone": "Europe/Lisbon",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Дубровник",
+    "country": "Хорватия",
+    "lat": 42.6507,
+    "lon": 18.0944,
+    "timezone": "Europe/Zagreb",
+    "visa_free_russia": false,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Афины",
+    "country": "Греция",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "timezone": "Europe/Athens",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Санторини",
+    "country": "Греция",
+    "lat": 36.3932,
+    "lon": 25.4615,
+    "timezone": "Europe/Athens",
+    "visa_free_russia": false,
+    "tags": [
+      "europe",
+      "resort"
+    ]
+  },
+  {
+    "name": "Копенгаген",
+    "country": "Дания",
+    "lat": 55.6761,
+    "lon": 12.5683,
+    "timezone": "Europe/Copenhagen",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Стокгольм",
+    "country": "Швеция",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "timezone": "Europe/Stockholm",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Осло",
+    "country": "Норвегия",
+    "lat": 59.9139,
+    "lon": 10.7522,
+    "timezone": "Europe/Oslo",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Цюрих",
+    "country": "Швейцария",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "timezone": "Europe/Zurich",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Мюнхен",
+    "country": "Германия",
+    "lat": 48.1351,
+    "lon": 11.582,
+    "timezone": "Europe/Berlin",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Краков",
+    "country": "Польша",
+    "lat": 50.0647,
+    "lon": 19.945,
+    "timezone": "Europe/Warsaw",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Братислава",
+    "country": "Словакия",
+    "lat": 48.1486,
+    "lon": 17.1077,
+    "timezone": "Europe/Bratislava",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Бухарест",
+    "country": "Румыния",
+    "lat": 44.4268,
+    "lon": 26.1025,
+    "timezone": "Europe/Bucharest",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "София",
+    "country": "Болгария",
+    "lat": 42.6977,
+    "lon": 23.3219,
+    "timezone": "Europe/Sofia",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Загреб",
+    "country": "Хорватия",
+    "lat": 45.815,
+    "lon": 15.9819,
+    "timezone": "Europe/Zagreb",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Любляна",
+    "country": "Словения",
+    "lat": 46.0569,
+    "lon": 14.5058,
+    "timezone": "Europe/Ljubljana",
+    "visa_free_russia": false,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Сараево",
+    "country": "Босния и Герцеговина",
+    "lat": 43.8563,
+    "lon": 18.4131,
+    "timezone": "Europe/Sarajevo",
+    "visa_free_russia": true,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Скопье",
+    "country": "Северная Македония",
+    "lat": 41.9981,
+    "lon": 21.4254,
+    "timezone": "Europe/Skopje",
+    "visa_free_russia": true,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Тирана",
+    "country": "Албания",
+    "lat": 41.3275,
+    "lon": 19.8187,
+    "timezone": "Europe/Tirana",
+    "visa_free_russia": true,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Кишинёв",
+    "country": "Молдова",
+    "lat": 47.0105,
+    "lon": 28.8638,
+    "timezone": "Europe/Chisinau",
+    "visa_free_russia": true,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Минск",
+    "country": "Беларусь",
+    "lat": 53.9045,
+    "lon": 27.5615,
+    "timezone": "Europe/Minsk",
+    "visa_free_russia": true,
+    "tags": [
+      "europe"
+    ]
+  },
+  {
+    "name": "Сан-Паулу",
+    "country": "Бразилия",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "timezone": "America/Sao_Paulo",
+    "visa_free_russia": false,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Лима",
+    "country": "Перу",
+    "lat": -12.0464,
+    "lon": -77.0428,
+    "timezone": "America/Lima",
+    "visa_free_russia": true,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Богота",
+    "country": "Колумбия",
+    "lat": 4.711,
+    "lon": -74.0721,
+    "timezone": "America/Bogota",
+    "visa_free_russia": true,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Медельин",
+    "country": "Колумбия",
+    "lat": 6.2442,
+    "lon": -75.5812,
+    "timezone": "America/Bogota",
+    "visa_free_russia": true,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Санто-Доминго",
+    "country": "Доминикана",
+    "lat": 18.4861,
+    "lon": -69.9312,
+    "timezone": "America/Santo_Domingo",
+    "visa_free_russia": true,
+    "tags": [
+      "america",
+      "resort"
+    ]
+  },
+  {
+    "name": "Пунта-Кана",
+    "country": "Доминикана",
+    "lat": 18.5601,
+    "lon": -68.3725,
+    "timezone": "America/Santo_Domingo",
+    "visa_free_russia": true,
+    "tags": [
+      "america",
+      "resort"
+    ]
+  },
+  {
+    "name": "Сан-Хосе",
+    "country": "Коста-Рика",
+    "lat": 9.9281,
+    "lon": -84.0907,
+    "timezone": "America/Costa_Rica",
+    "visa_free_russia": true,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Панама",
+    "country": "Панама",
+    "lat": 8.9824,
+    "lon": -79.5199,
+    "timezone": "America/Panama",
+    "visa_free_russia": true,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Каракас",
+    "country": "Венесуэла",
+    "lat": 10.4806,
+    "lon": -66.9036,
+    "timezone": "America/Caracas",
+    "visa_free_russia": true,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Монтевидео",
+    "country": "Уругвай",
+    "lat": -34.9011,
+    "lon": -56.1645,
+    "timezone": "America/Montevideo",
+    "visa_free_russia": true,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Сантьяго",
+    "country": "Чили",
+    "lat": -33.4489,
+    "lon": -70.6693,
+    "timezone": "America/Santiago",
+    "visa_free_russia": false,
+    "tags": [
+      "america"
+    ]
+  },
+  {
+    "name": "Тунис",
+    "country": "Тунис",
+    "lat": 36.8065,
+    "lon": 10.1815,
+    "timezone": "Africa/Tunis",
+    "visa_free_russia": true,
+    "tags": [
+      "africa",
+      "resort"
+    ]
+  },
+  {
+    "name": "Эль-Гуна",
+    "country": "Египет",
+    "lat": 27.3875,
+    "lon": 33.6828,
+    "timezone": "Africa/Cairo",
+    "visa_free_russia": true,
+    "tags": [
+      "africa",
+      "resort"
+    ]
+  },
+  {
+    "name": "Дахаб",
+    "country": "Египет",
+    "lat": 28.5,
+    "lon": 34.5,
+    "timezone": "Africa/Cairo",
+    "visa_free_russia": true,
+    "tags": [
+      "africa",
+      "resort"
+    ]
+  },
+  {
+    "name": "Найроби",
+    "country": "Кения",
+    "lat": -1.2921,
+    "lon": 36.8219,
+    "timezone": "Africa/Nairobi",
+    "visa_free_russia": true,
+    "tags": [
+      "africa"
+    ]
+  },
+  {
+    "name": "Занзибар",
+    "country": "Танзания",
+    "lat": -6.1659,
+    "lon": 39.2026,
+    "timezone": "Africa/Dar_es_Salaam",
+    "visa_free_russia": true,
+    "tags": [
+      "africa",
+      "resort"
+    ]
+  },
+  {
+    "name": "Дар-эс-Салам",
+    "country": "Танзания",
+    "lat": -6.7924,
+    "lon": 39.2083,
+    "timezone": "Africa/Dar_es_Salaam",
+    "visa_free_russia": true,
+    "tags": [
+      "africa"
+    ]
+  },
+  {
+    "name": "Касабланка",
+    "country": "Марокко",
+    "lat": 33.5731,
+    "lon": -7.5898,
+    "timezone": "Africa/Casablanca",
+    "visa_free_russia": true,
+    "tags": [
+      "africa"
+    ]
+  },
+  {
+    "name": "Нади",
+    "country": "Фиджи",
+    "lat": -17.7765,
+    "lon": 177.95,
+    "timezone": "Pacific/Fiji",
+    "visa_free_russia": true,
+    "tags": [
+      "oceania",
+      "resort"
+    ]
+  },
+  {
+    "name": "Сидней",
+    "country": "Австралия",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "timezone": "Australia/Sydney",
+    "visa_free_russia": false,
+    "tags": [
+      "oceania"
+    ]
+  },
+  {
+    "name": "Окленд",
+    "country": "Новая Зеландия",
+    "lat": -36.8485,
+    "lon": 174.7633,
+    "timezone": "Pacific/Auckland",
+    "visa_free_russia": false,
+    "tags": [
+      "oceania"
+    ]
+  }
 ]

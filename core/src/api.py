@@ -29,8 +29,10 @@ app = FastAPI(
 
 @app.on_event("startup")
 async def startup():
-    """Инициализация Swiss Ephemeris при старте."""
+    """Инициализация Swiss Ephemeris и базы данных при старте."""
     ephemeris.init_ephe(SWE_PATH)
+    from .database import init_db
+    await init_db()
 
 
 # ── Модели запросов ──────────────────────────────────────────────
@@ -59,6 +61,9 @@ class BestPlaceRequest(BaseModel):
     city_names: list[str] | None = Field(None, description="Список городов для проверки")
     visa_free_only: bool = Field(False, description="Только города без визы для РФ")
     top_n: int = Field(10, description="Количество лучших результатов")
+    countries: list[str] | None = Field(None, description="Фильтр по странам")
+    max_tz_diff_hours: float | None = Field(None, description="Макс. разница часовых поясов (часы)")
+    reference_tz_offset: float | None = Field(None, description="Ссылочный часовой пояс (ЧЧ.ЧЧ)")
 
 
 class PdfRequest(BaseModel):
@@ -217,6 +222,9 @@ async def api_best_place(req: BestPlaceRequest):
             city_names=req.city_names,
             visa_free_only=req.visa_free_only,
             top_n=req.top_n,
+            countries=req.countries,
+            max_tz_diff_hours=req.max_tz_diff_hours,
+            reference_tz_offset=req.reference_tz_offset,
         )
         return BestPlaceResponse(
             results=[
@@ -286,6 +294,139 @@ async def health():
     return {"status": "ok", "version": "0.1.0"}
 
 
+# ── Пользователи, профили, история ───────────────────────────────
+
+
+class UserRegisterRequest(BaseModel):
+    user_id: int = Field(..., description="ID пользователя в MAX")
+    name: str | None = Field(None, description="Имя пользователя")
+    phone: str | None = Field(None, description="Телефон")
+    username: str | None = Field(None, description="Username")
+
+
+class ProfileRequest(BaseModel):
+    user_id: int
+    label: str = Field("Мой профиль", description="Название профиля")
+    birth_date: str | None = None
+    birth_time: str | None = None
+    latitude: float | None = None
+    longitude: float | None = None
+    city_name: str | None = None
+
+
+class ProfileUpdateRequest(BaseModel):
+    label: str | None = None
+    birth_date: str | None = None
+    birth_time: str | None = None
+    latitude: float | None = None
+    longitude: float | None = None
+    city_name: str | None = None
+
+
+class HistoryRequest(BaseModel):
+    user_id: int
+    action: str
+    profile_id: int | None = None
+    request_data: dict | None = None
+    response_data: dict | None = None
+
+
+@app.post("/api/users/register")
+async def api_register_user(req: UserRegisterRequest):
+    """Зарегистрировать или обновить пользователя."""
+    from .database import upsert_user
+    try:
+        return await upsert_user(req.user_id, req.name, req.phone, req.username)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/users/{user_id}")
+async def api_get_user(user_id: int):
+    """Получить данные пользователя."""
+    from .database import get_user
+    user = await get_user(user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="Пользователь не найден")
+    return user
+
+
+@app.get("/api/users/{user_id}/profiles")
+async def api_get_profiles(user_id: int):
+    """Получить все профили пользователя."""
+    from .database import get_profiles
+    return await get_profiles(user_id)
+
+
+@app.post("/api/profiles")
+async def api_create_profile(req: ProfileRequest):
+    """Создать профиль."""
+    from .database import create_profile
+    try:
+        return await create_profile(
+            req.user_id, req.label, req.birth_date, req.birth_time,
+            req.latitude, req.longitude, req.city_name,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.put("/api/profiles/{profile_id}")
+async def api_update_profile(profile_id: int, req: ProfileUpdateRequest):
+    """Обновить профиль."""
+    from .database import update_profile
+    fields = {k: v for k, v in req.model_dump().items() if v is not None}
+    result = await update_profile(profile_id, **fields)
+    if not result:
+        raise HTTPException(status_code=404, detail="Профиль не найден")
+    return result
+
+
+@app.delete("/api/profiles/{profile_id}")
+async def api_delete_profile(profile_id: int):
+    """Удалить профиль."""
+    from .database import delete_profile
+    if not await delete_profile(profile_id):
+        raise HTTPException(status_code=404, detail="Профиль не найден")
+    return {"ok": True}
+
+
+@app.post("/api/history")
+async def api_add_history(req: HistoryRequest):
+    """Записать действие в историю."""
+    from .database import add_history
+    try:
+        record_id = await add_history(
+            req.user_id, req.action, req.profile_id,
+            req.request_data, req.response_data,
+        )
+        return {"id": record_id}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/history/{user_id}")
+async def api_get_history(user_id: int, limit: int = 20):
+    """Получить историю пользователя."""
+    from .database import get_history
+    return await get_history(user_id, limit)
+
+
+@app.get("/api/cities/search")
+async def api_search_cities(q: str = ""):
+    """Поиск городов по подстроке."""
+    import json
+    cities_path = Path(__file__).parent.parent / "data" / "cities.json"
+    if not cities_path.exists():
+        return []
+    with open(cities_path, "r", encoding="utf-8") as f:
+        cities = json.load(f)
+    if not q:
+        return cities
+    q_lower = q.lower()
+    return [c for c in cities if q_lower in c["name"].lower() or q_lower in c["country"].lower()]
+
+
 class ChartImageRequest(BaseModel):
     birth_date: str
     birth_time: str
@@ -323,11 +464,21 @@ async def api_chart_image(req: ChartImageRequest):
             for p in chart.planets
         ]
 
+        aspects_data = [
+            {
+                "planet1": a.planet1,
+                "planet2": a.planet2,
+                "aspect_type": a.aspect_type,
+            }
+            for a in chart.aspects
+        ]
+
         png_bytes = render_chart_png(
             planets=planets_data,
             cusps=chart.houses.cusps,
             asc=chart.houses.asc,
             mc=chart.houses.mc,
+            aspects=aspects_data,
         )
 
         return Response(

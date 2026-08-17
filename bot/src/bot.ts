@@ -1,11 +1,9 @@
-import axios from 'axios';
 import { Keyboard } from '@maxhub/max-bot-api';
 import { StateManager } from './state';
-
-const CORE_API = process.env.CORE_API_URL || 'http://localhost:8000';
+import * as api from './api';
 
 // Клавиатуры
-const actionKeyboard = Keyboard.inlineKeyboard([
+export const actionKeyboard = Keyboard.inlineKeyboard([
   [
     Keyboard.button.callback('Натальная карта', 'natal', { intent: 'positive' }),
     Keyboard.button.callback('Соляр', 'solar', { intent: 'positive' }),
@@ -32,7 +30,7 @@ const sphereKeyboard = Keyboard.inlineKeyboard([
   ],
 ]);
 
-// Города
+// Города (fallback, если API недоступен)
 const QUICK_CITIES: Record<string, { lat: number; lon: number }> = {
   'москва': { lat: 55.7558, lon: 37.6173 },
   'санкт-петербург': { lat: 59.9343, lon: 30.3351 },
@@ -64,17 +62,28 @@ const SPHERES: Record<string, string[]> = {
   'духовность': ['spirituality'],
 };
 
-function parseDate(text: string): string | null {
-  const match = text.match(/^(\d{1,2})[.\/\-](\d{1,2})[.\/\-](\d{4})$/);
+export function parseDate(text: string): string | null {
+  // Нормализуем: запятые → точки, множественные пробелы → один
+  let cleaned = text.trim().replace(/[,]/g, '.').replace(/\s+/g, ' ');
+
+  // Паттерн: день.месяц.год (разделители: точка, пробел, /, -)
+  const match = cleaned.match(/^(\d{1,2})[.\s\/\-](\d{1,2})[.\s\/\-](\d{2,4})$/);
   if (!match) return null;
+
   const day = parseInt(match[1]);
   const month = parseInt(match[2]);
-  const year = parseInt(match[3]);
-  if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2100) return null;
+  let year = parseInt(match[3]);
+
+  // Конвертируем 2-значный год: 00-30 → 2000+, 31-99 → 1900+
+  if (year < 100) {
+    year = year <= 30 ? 2000 + year : 1900 + year;
+  }
+
+  if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1920 || year > 2030) return null;
   return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 }
 
-function parseTime(text: string): string | null {
+export function parseTime(text: string): string | null {
   if (text.toLowerCase() === 'не знаю' || text.toLowerCase() === 'неизвестно') return '12:00';
   const match = text.match(/^(\d{1,2})[:.](\d{2})$/);
   if (!match) {
@@ -91,15 +100,11 @@ function parseTime(text: string): string | null {
   return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
 }
 
-function getCityCoords(text: string): { lat: number; lon: number } | null {
-  return QUICK_CITIES[text.toLowerCase().trim()] || null;
-}
-
-function capitalize(s: string): string {
+export function capitalize(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-function formatPlanetTable(planets: any[]): string {
+export function formatPlanetTable(planets: any[]): string {
   const mainPlanets = ['sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
   const symbols: Record<string, string> = {
     sun: '☉', moon: '☽', mercury: '☿', venus: '♀', mars: '♂',
@@ -115,7 +120,7 @@ function formatPlanetTable(planets: any[]): string {
     .join('\n');
 }
 
-function formatAspects(aspects: any[]): string {
+export function formatAspects(aspects: any[]): string {
   const aspectNames: Record<string, string> = {
     conjunction: 'соединение', sextile: 'секстиль', square: 'квадратура',
     trine: 'тригон', opposition: 'оппозиция',
@@ -125,41 +130,87 @@ function formatAspects(aspects: any[]): string {
   ).join('\n');
 }
 
-function getUserId(ctx: any): number {
-  return ctx.message?.sender?.user_id || ctx.message?.sender_id;
+// ── Поиск города с автодополнением ───────────────────────────────
+
+export async function findCityCoords(text: string): Promise<{ lat: number; lon: number; name: string } | null> {
+  const lower = text.toLowerCase().trim();
+
+  // Сначала быстрый поиск по хардкоду
+  if (QUICK_CITIES[lower]) {
+    return { ...QUICK_CITIES[lower], name: text };
+  }
+
+  // Поиск через API
+  try {
+    const cities = await api.searchCities(text);
+    if (cities.length === 1) {
+      return { lat: cities[0].lat, lon: cities[0].lon, name: cities[0].name };
+    }
+    if (cities.length > 1) {
+      // Сохраняем кандидатов в state для выбора
+      return null; // Вызывающий код должен обработать
+    }
+  } catch {
+    // Fallback — ничего не нашли
+  }
+  return null;
 }
 
-// Отправка картинки колеса
-async function sendChartImage(ctx: any, imageData: Buffer): Promise<void> {
+export async function getCitySuggestions(query: string): Promise<string[]> {
   try {
-    console.log(`[img] Размер буфера: ${imageData.length} байт`);
-    const image = await ctx.api.uploadImage({ source: imageData });
-    console.log('[img] Загружено, token:', image.token || 'нет');
-    await ctx.reply('', { attachments: [image.toJson()] });
-    console.log('[img] Отправлено');
-  } catch (err: any) {
-    console.error('[img] Ошибка:', err.message, err.status, JSON.stringify(err.data));
+    const cities = await api.searchCities(query);
+    return cities.slice(0, 5).map((c: any) => `${c.name} (${c.country})`);
+  } catch {
+    return Object.keys(QUICK_CITIES).map(c => capitalize(c)).slice(0, 5);
   }
 }
 
-// ─── Обработчики ─────────────────────────────────────────
+// ── Обработчики диалога ──────────────────────────────────────────
 
-export function handleStart(ctx: any): void {
-  ctx.reply(
-    'Добро пожаловать! Я помогу рассчитать солярную карту.\n\n' +
-    'Команды:\n' +
-    '/natal — Натальная карта\n' +
-    '/solar — Соляр на год\n' +
-    '/bestplace — Лучшее место для встречи дня рождения\n' +
-    '/help — Помощь'
-  );
+export function getUserId(ctx: any): number {
+  return ctx.message?.sender?.user_id || ctx.message?.sender_id || ctx.user?.user_id || ctx.callback?.user_id;
 }
 
-export function handleBirthDate(ctx: any, text: string, states: StateManager): void {
-  const userId = getUserId(ctx);
+export async function handleStart(ctx: any, userId: number, userName?: string): Promise<void> {
+  // Регистрируем пользователя
+  await api.registerUser(userId, userName);
+
+  // Проверяем, есть ли сохранённые профили
+  const profiles = await api.getProfiles(userId);
+
+  let greeting = '✨ Добро пожаловать в Соляр! ✨\n\n';
+  if (userName) {
+    greeting = `✨ Добро пожаловать, ${userName}! ✨\n\n`;
+  }
+
+  greeting += 'Я помогу вам рассчитать:\n';
+  greeting += '• Натальную карту — ваша карта рождения\n';
+  greeting += '• Соляр — прогноз на год\n';
+  greeting += '• Лучшее место — где лучше встретить день рождения\n\n';
+
+  if (profiles.length > 0) {
+    greeting += '📁 Ваши профили:\n';
+    profiles.forEach((p: any) => {
+      greeting += `• ${p.label}: ${p.birth_date || '—'}\n`;
+    });
+    greeting += '\n';
+  }
+
+  greeting += 'Выберите действие:\n\n';
+  greeting += '/natal — Натальная карта\n';
+  greeting += '/solar — Соляр на год\n';
+  greeting += '/bestplace — Лучшее место\n';
+  greeting += '/profile — Мои профили\n';
+  greeting += '/history — История расчётов\n';
+  greeting += '/help — Помощь';
+
+  ctx.reply(greeting);
+}
+
+export function handleBirthDate(ctx: any, text: string, states: StateManager, userId: number): void {
   const date = parseDate(text);
   if (!date) {
-    ctx.reply('Неверный формат даты. Введите в формате ДД.ММ.ГГГГ\n\nНапример: 15.03.1990');
+    ctx.reply('Не удалось распознать дату. Попробуйте так:\n\n15.03.1990\n15/03/1990\n15 03 1990\n15.03.90');
     return;
   }
   states.setData(userId, { birthDate: date });
@@ -167,8 +218,7 @@ export function handleBirthDate(ctx: any, text: string, states: StateManager): v
   ctx.reply('Введите время рождения в формате ЧЧ:ММ\n\nЕсли не знаете точное время — напишите "не знаю"');
 }
 
-export function handleBirthTime(ctx: any, text: string, states: StateManager): void {
-  const userId = getUserId(ctx);
+export function handleBirthTime(ctx: any, text: string, states: StateManager, userId: number): void {
   const time = parseTime(text);
   if (!time) {
     ctx.reply('Неверный формат времени. Введите в формате ЧЧ:ММ\n\nНапример: 14:30');
@@ -176,30 +226,29 @@ export function handleBirthTime(ctx: any, text: string, states: StateManager): v
   }
   states.setData(userId, { birthTime: time });
   states.setStep(userId, 'awaiting_birth_city');
-  ctx.reply('Введите город рождения\n\nМосква, Санкт-Петербург, Сочи, Дубай, Стамбул...');
+  ctx.reply('Введите город рождения\n\nМосква, Санкт-Петербург, Сочи, Дубай, Стамбул...\n\nНачните вводить — покажу варианты');
 }
 
-export function handleBirthCity(ctx: any, text: string, states: StateManager): void {
-  const userId = getUserId(ctx);
-  const coords = getCityCoords(text);
+export async function handleBirthCity(ctx: any, text: string, states: StateManager, userId: number): Promise<void> {
+  const coords = await findCityCoords(text);
   if (!coords) {
-    ctx.reply(
-      'Город не найден. Попробуйте:\n' +
-      Object.keys(QUICK_CITIES).map(c => `• ${capitalize(c)}`).join('\n')
-    );
+    const suggestions = await getCitySuggestions(text);
+    if (suggestions.length > 0) {
+      ctx.reply('Город не найден. Возможно, вы имели в виду:\n\n' + suggestions.map(s => `• ${s}`).join('\n'));
+    } else {
+      ctx.reply('Город не найден. Попробуйте:\n' + Object.keys(QUICK_CITIES).map(c => `• ${capitalize(c)}`).join('\n'));
+    }
     return;
   }
-  states.setData(userId, { birthLat: coords.lat, birthLon: coords.lon, birthCity: text });
+  states.setData(userId, { birthLat: coords.lat, birthLon: coords.lon, birthCity: coords.name });
   const data = states.getData(userId);
 
   if (data.action === 'natal') {
-    calculateNatal(ctx, data, states);
+    await calculateNatal(ctx, data, states, userId);
   } else if (data.action === 'solar') {
-    // Сначала спрашиваем город встречи дня рождения
     states.setStep(userId, 'awaiting_solar_city');
     ctx.reply(
-      'Данные рождения сохранены!\n\n' +
-      'Где планируете встретить день рождения?\n\n' +
+      'Данные рождения сохранены!\n\nГде планируете встретить день рождения?\n\n' +
       Object.keys(QUICK_CITIES).map(c => `• ${capitalize(c)}`).join('\n') +
       '\n\nИли введите свой город'
     );
@@ -209,13 +258,12 @@ export function handleBirthCity(ctx: any, text: string, states: StateManager): v
   }
 }
 
-export function handleAction(ctx: any, text: string, states: StateManager): void {
-  const userId = getUserId(ctx);
+export function handleAction(ctx: any, text: string, states: StateManager, userId: number): void {
   const data = states.getData(userId);
   const lower = text.toLowerCase();
 
   if (lower.includes('натал')) {
-    calculateNatal(ctx, data, states);
+    calculateNatal(ctx, data, states, userId);
   } else if (lower.includes('соляр') && lower.includes('другой')) {
     states.setStep(userId, 'awaiting_solar_year');
     ctx.reply('Введите год соляра (например: 2026)');
@@ -235,8 +283,7 @@ export function handleAction(ctx: any, text: string, states: StateManager): void
   }
 }
 
-export function handleSolarYear(ctx: any, text: string, states: StateManager): void {
-  const userId = getUserId(ctx);
+export function handleSolarYear(ctx: any, text: string, states: StateManager, userId: number): void {
   const year = parseInt(text);
   if (year >= 2020 && year <= 2050) {
     states.setData(userId, { solarYear: year });
@@ -250,23 +297,23 @@ export function handleSolarYear(ctx: any, text: string, states: StateManager): v
   }
 }
 
-export function handleSolarCity(ctx: any, text: string, states: StateManager): void {
-  const userId = getUserId(ctx);
-  const coords = getCityCoords(text);
+export async function handleSolarCity(ctx: any, text: string, states: StateManager, userId: number): Promise<void> {
+  const coords = await findCityCoords(text);
   if (!coords) {
-    ctx.reply(
-      'Город не найден. Попробуйте:\n' +
-      Object.keys(QUICK_CITIES).map(c => `• ${capitalize(c)}`).join('\n')
-    );
+    const suggestions = await getCitySuggestions(text);
+    if (suggestions.length > 0) {
+      ctx.reply('Город не найден. Возможно:\n\n' + suggestions.map(s => `• ${s}`).join('\n'));
+    } else {
+      ctx.reply('Город не найден. Попробуйте:\n' + Object.keys(QUICK_CITIES).map(c => `• ${capitalize(c)}`).join('\n'));
+    }
     return;
   }
   const data = states.getData(userId);
-  states.setData(userId, { solarLat: coords.lat, solarLon: coords.lon, solarCity: text });
-  calculateSolar(ctx, states.getData(userId), data.solarYear || new Date().getFullYear(), states);
+  states.setData(userId, { solarLat: coords.lat, solarLon: coords.lon, solarCity: coords.name });
+  await calculateSolar(ctx, states.getData(userId), data.solarYear || new Date().getFullYear(), states, userId);
 }
 
-export function handleSphere(ctx: any, text: string, states: StateManager): void {
-  const userId = getUserId(ctx);
+export async function handleSphere(ctx: any, text: string, states: StateManager, userId: number): Promise<void> {
   const lower = text.toLowerCase();
   const spheres = SPHERES[lower];
   if (!spheres) {
@@ -274,25 +321,109 @@ export function handleSphere(ctx: any, text: string, states: StateManager): void
     return;
   }
   states.setData(userId, { spheres });
-  calculateBestPlace(ctx, states.getData(userId), states);
+  await calculateBestPlace(ctx, states.getData(userId), states, userId);
 }
 
-// ─── Расчёты ─────────────────────────────────────────────
+// ── Профили ──────────────────────────────────────────────────────
 
-async function calculateNatal(ctx: any, data: Record<string, any>, states: StateManager): Promise<void> {
-  const userId = getUserId(ctx);
+export async function handleProfileCommand(ctx: any, userId: number): Promise<void> {
+  const profiles = await api.getProfiles(userId);
+  if (profiles.length === 0) {
+    ctx.reply(
+      'У вас пока нет сохранённых профилей.\n\n' +
+      'Профили создаются автоматически при расчёте натальной карты.\n' +
+      'Или создайте вручную: /profile_add Имя ДД.ММ.ГГГГ ЧЧ:ММ Город'
+    );
+    return;
+  }
+
+  const list = profiles.map((p: any, i: number) =>
+    `${i + 1}. ${p.label}\n   Дата: ${p.birth_date || '—'} ${p.birth_time || ''}\n   Город: ${p.city_name || '—'}`
+  ).join('\n\n');
+
+  ctx.reply(`Ваши профили:\n\n${list}\n\nУдалить: /profile_del <номер>`);
+}
+
+export async function handleProfileAdd(ctx: any, text: string, userId: number): Promise<void> {
+  // Формат: /profile_add Имя ДД.ММ.ГГГГ ЧЧ:ММ Город
+  const parts = text.replace('/profile_add', '').trim().split(/\s+/);
+  if (parts.length < 2) {
+    ctx.reply('Формат: /profile_add Имя ДД.ММ.ГГГГ ЧЧ:ММ Город\n\nПример: /profile_add Мама 25.06.1965 10:30 Москва');
+    return;
+  }
+
+  const label = parts[0];
+  const dateStr = parts[1];
+  const timeStr = parts[2] || '12:00';
+  const cityStr = parts.slice(3).join(' ') || 'Москва';
+
+  const date = parseDate(dateStr);
+  const time = parseTime(timeStr);
+  if (!date) {
+    ctx.reply('Неверный формат даты. Используйте ДД.ММ.ГГГГ');
+    return;
+  }
+
+  const coords = await findCityCoords(cityStr);
+  const lat = coords?.lat || 55.7558;
+  const lon = coords?.lon || 37.6173;
+
+  const profile = await api.createProfile({
+    user_id: userId,
+    label,
+    birth_date: date,
+    birth_time: time || '12:00',
+    latitude: lat,
+    longitude: lon,
+    city_name: coords?.name || cityStr,
+  });
+
+  if (profile) {
+    ctx.reply(`Профиль "${label}" создан!\nДата: ${date} ${time}\nГород: ${coords?.name || cityStr}`);
+  } else {
+    ctx.reply('Ошибка создания профиля.');
+  }
+}
+
+// ── История ──────────────────────────────────────────────────────
+
+export async function handleHistoryCommand(ctx: any, userId: number): Promise<void> {
+  const history = await api.getHistory(userId, 10);
+  if (history.length === 0) {
+    ctx.reply('История пуста. Сделайте первый расчёт!');
+    return;
+  }
+
+  const actionNames: Record<string, string> = {
+    natal: 'Натальная карта',
+    solar: 'Соляр',
+    bestplace: 'Лучшее место',
+    chart: 'Колесо карты',
+  };
+
+  const list = history.map((h: any) => {
+    const date = new Date(h.created_at).toLocaleDateString('ru-RU');
+    const action = actionNames[h.action] || h.action;
+    const profile = h.profile_label ? ` (${h.profile_label})` : '';
+    return `• ${date} — ${action}${profile}`;
+  }).join('\n');
+
+  ctx.reply(`Последние расчёты:\n\n${list}`);
+}
+
+// ── Расчёты ──────────────────────────────────────────────────────
+
+export async function calculateNatal(ctx: any, data: Record<string, any>, states: StateManager, userId: number): Promise<void> {
   ctx.reply('Рассчитываю натальную карту...');
 
   try {
-    const response = await axios.post(`${CORE_API}/api/natal`, {
+    const result = await api.calculateNatal({
       birth_date: data.birthDate,
       birth_time: data.birthTime,
       latitude: data.birthLat,
       longitude: data.birthLon,
-      house_system: 'P',
     });
 
-    const result = response.data;
     const planetTable = formatPlanetTable(result.planets);
     const aspects = formatAspects(result.aspects);
 
@@ -303,6 +434,23 @@ async function calculateNatal(ctx: any, data: Record<string, any>, states: State
       `ASC: ${Math.round(result.asc)}° | MC: ${Math.round(result.mc)}°\n\n` +
       `Аспекты:\n${aspects}`;
 
+    // Сохраняем в историю
+    await api.addHistory(userId, 'natal', undefined, { birthDate: data.birthDate }, { planets: result.planets?.length });
+
+    // Сохраняем/обновляем профиль
+    const profiles = await api.getProfiles(userId);
+    if (profiles.length === 0) {
+      await api.createProfile({
+        user_id: userId,
+        label: 'Мой профиль',
+        birth_date: data.birthDate,
+        birth_time: data.birthTime,
+        latitude: data.birthLat,
+        longitude: data.birthLon,
+        city_name: data.birthCity,
+      });
+    }
+
     states.setStep(userId, 'awaiting_action');
     ctx.reply(message, { attachments: [actionKeyboard] });
   } catch (err: any) {
@@ -311,25 +459,17 @@ async function calculateNatal(ctx: any, data: Record<string, any>, states: State
   }
 }
 
-async function calculateSolar(ctx: any, data: Record<string, any>, year: number, states: StateManager): Promise<void> {
-  const userId = getUserId(ctx);
+export async function calculateSolar(ctx: any, data: Record<string, any>, year: number, states: StateManager, userId: number): Promise<void> {
   ctx.reply(`Рассчитываю соляр на ${year} год в ${data.solarCity || 'Москве'}...`);
 
   try {
-    const response = await axios.post(`${CORE_API}/api/solar`, {
-      natal: {
-        birth_date: data.birthDate,
-        birth_time: data.birthTime,
-        latitude: data.birthLat,
-        longitude: data.birthLon,
-        house_system: 'P',
-      },
+    const result = await api.calculateSolar(
+      { birth_date: data.birthDate, birth_time: data.birthTime, latitude: data.birthLat, longitude: data.birthLon },
       year,
-      latitude: data.solarLat || data.birthLat,
-      longitude: data.solarLon || data.birthLon,
-    });
+      data.solarLat || data.birthLat,
+      data.solarLon || data.birthLon,
+    );
 
-    const result = response.data;
     const planetTable = formatPlanetTable(result.planets);
     const aspects = formatAspects(result.aspects);
 
@@ -345,6 +485,8 @@ async function calculateSolar(ctx: any, data: Record<string, any>, year: number,
       `ASC: ${Math.round(result.asc)}° | MC: ${Math.round(result.mc)}°\n\n` +
       `Наложение на натал:\n${overlay}`;
 
+    await api.addHistory(userId, 'solar', undefined, { year, city: data.solarCity }, { planets: result.planets?.length });
+
     states.setStep(userId, 'awaiting_action');
     ctx.reply(message, { attachments: [actionKeyboard] });
   } catch (err: any) {
@@ -353,25 +495,18 @@ async function calculateSolar(ctx: any, data: Record<string, any>, year: number,
   }
 }
 
-async function calculateBestPlace(ctx: any, data: Record<string, any>, states: StateManager): Promise<void> {
-  const userId = getUserId(ctx);
+export async function calculateBestPlace(ctx: any, data: Record<string, any>, states: StateManager, userId: number): Promise<void> {
   ctx.reply('Ищу лучшие места для встречи дня рождения...');
 
   try {
-    const response = await axios.post(`${CORE_API}/api/best-place`, {
-      natal: {
-        birth_date: data.birthDate,
-        birth_time: data.birthTime,
-        latitude: data.birthLat,
-        longitude: data.birthLon,
-        house_system: 'P',
-      },
-      year: new Date().getFullYear(),
-      spheres: data.spheres,
-      top_n: 5,
-    });
+    const result = await api.calculateBestPlace(
+      { birth_date: data.birthDate, birth_time: data.birthTime, latitude: data.birthLat, longitude: data.birthLon },
+      new Date().getFullYear(),
+      data.spheres,
+      5,
+    );
 
-    const results = response.data.results;
+    const results = result.results;
     if (results.length === 0) {
       ctx.reply('Не удалось найти подходящие места. Попробуйте другую сферу.');
       return;
@@ -385,10 +520,31 @@ async function calculateBestPlace(ctx: any, data: Record<string, any>, states: S
         r.details.slice(0, 3).map((d: string) => `   ${d}`).join('\n')
       ).join('\n\n');
 
+    await api.addHistory(userId, 'bestplace', undefined, { spheres: data.spheres }, { topCity: results[0]?.city });
+
     states.setStep(userId, 'awaiting_action');
     ctx.reply(message, { attachments: [actionKeyboard] });
   } catch (err: any) {
     console.error('Ошибка расчёта лучшего места:', err.message);
     ctx.reply('Ошибка при расчёте. Попробуйте снова.\n/start');
+  }
+}
+
+export async function sendChartImage(ctx: any, data: Record<string, any>, userId: number): Promise<void> {
+  ctx.reply('Генерирую колесо карты...');
+  try {
+    const imageData = await api.getChartImage({
+      birth_date: data.birthDate,
+      birth_time: data.birthTime,
+      latitude: data.birthLat,
+      longitude: data.birthLon,
+    });
+    console.log(`[img] Размер: ${imageData.length} байт`);
+    const image = await ctx.api.uploadImage({ source: imageData });
+    await ctx.reply('', { attachments: [image.toJson()] });
+    await api.addHistory(userId, 'chart');
+  } catch (err: any) {
+    console.error('[chart] Ошибка:', err.message);
+    ctx.reply('Ошибка генерации колеса. Попробуйте позже.');
   }
 }
