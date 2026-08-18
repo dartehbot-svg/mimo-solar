@@ -236,6 +236,7 @@ def generate_full_description(
     mc: float = 0,
     aspects: list[AspectData] | None = None,
     chart_type: str = "natal",
+    solar_overlay: dict[str, int] | None = None,
 ) -> str:
     """Сгенерировать полное описание карты.
 
@@ -277,7 +278,7 @@ def generate_full_description(
         if pih:
             parts.append(pih)
 
-        # Аспекты планеты
+        # Аспекты планеты (до 3)
         if aspects:
             planet_aspects = [
                 a for a in aspects
@@ -295,12 +296,59 @@ def generate_full_description(
 
         parts.append("")
 
-    # ASC и MC
+    # ASC и MC с аспектами
     asc_sign_idx = int(asc / 30) % 12
     mc_sign_idx = int(mc / 30) % 12
     parts.append(f"Асцендент: {SIGNS[asc_sign_idx]} ({asc:.1f}°)")
     parts.append(f"MC: {SIGNS[mc_sign_idx]} ({mc:.1f}°)")
+
+    # Аспекты к ASC/MC
+    if aspects:
+        asc_aspects = [a for a in aspects if _is_angle_aspect(a, 'asc', asc)]
+        mc_aspects = [a for a in aspects if _is_angle_aspect(a, 'mc', mc)]
+        if asc_aspects or mc_aspects:
+            parts.append("")
+            parts.append("Аспекты к угловым точкам:")
+            for a in asc_aspects[:3]:
+                p_name = PLANET_NAMES_RU.get(a.planet1 if a.planet2 == 'asc' else a.planet2, a.planet1)
+                asp_name = ASPECT_NAMES_RU.get(a.aspect_type, a.aspect_type)
+                parts.append(f"• {p_name} — ASC: {asp_name} (орб {a.orb:.1f}°)")
+            for a in mc_aspects[:3]:
+                p_name = PLANET_NAMES_RU.get(a.planet1 if a.planet2 == 'mc' else a.planet2, a.planet1)
+                asp_name = ASPECT_NAMES_RU.get(a.aspect_type, a.aspect_type)
+                parts.append(f"• {p_name} — MC: {asp_name} (орб {a.orb:.1f}°)")
     parts.append("")
+
+    # Полный список мажорных аспектов (отсортирован по орбу)
+    if aspects and len(aspects) > 0:
+        sorted_aspects = sorted(aspects, key=lambda a: a.orb)
+        parts.append("Ключевые аспекты карты:")
+        parts.append("")
+        for a in sorted_aspects[:15]:
+            p1_name = PLANET_NAMES_RU.get(a.planet1, a.planet1)
+            p2_name = PLANET_NAMES_RU.get(a.planet2, a.planet2)
+            asp_name = ASPECT_NAMES_RU.get(a.aspect_type, a.aspect_type)
+            asp_desc = get_aspect_description(a.aspect_type, "short")
+            exact_str = " (точный)" if a.exact else ""
+            parts.append(f"• {p1_name} — {p2_name}: {asp_name} (орб {a.orb:.1f}°{exact_str})")
+            if asp_desc:
+                parts.append(f"  {asp_desc}")
+        parts.append("")
+
+    # Наложение соляра на натал
+    if chart_type == "solar" and solar_overlay:
+        parts.append("Наложение на натальные дома:")
+        parts.append("")
+        for planet_name, house_num in solar_overlay.items():
+            p_name = PLANET_NAMES_RU.get(planet_name, planet_name)
+            overlay_text = db.get("solar_house_overlay", {}).get(f"{planet_name}_in_{house_num}", "")
+            if not overlay_text:
+                overlay_text = db.get("solar_house_overlay", {}).get(f"sun_in_{house_num}", "")
+            if overlay_text:
+                parts.append(f"{p_name} соляра в {house_num}-м натальном доме: {overlay_text}")
+            else:
+                parts.append(f"{p_name} соляра в {house_num}-м натальном доме")
+        parts.append("")
 
     # Итоговое заключение
     conclusion = get_connector("conclusion")
@@ -308,6 +356,14 @@ def generate_full_description(
         parts.append(conclusion)
 
     return "\n".join(parts)
+
+
+def _is_angle_aspect(aspect: AspectData, angle: str, angle_deg: float) -> bool:
+    """Проверить, является ли аспект аспектом к угловой точке (ASC/MC)."""
+    # Проверяем, что одна из планет аспекта — это "asc" или "mc"
+    # (в текущей системе аспекты к ASC/MC не рассчитываются автоматически,
+    # поэтому эта функция — заглушка для будущего расширения)
+    return False
 
 
 def get_adaptive_text(

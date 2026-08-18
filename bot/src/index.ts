@@ -14,7 +14,9 @@ import {
   handleProfileName, handleProfileDate, handleProfileTime, handleProfileCity,
   calculateNatal, calculateSolar, calculateBestPlace, sendChartImage,
   showShortDescription, showFullDescription, downloadFullDescription,
+  showPersonSelector, handlePersonSelection,
   startKeyboard, natalResultKeyboard, descKeyboard, fullDescKeyboard, sphereKeyboard,
+  chartTypeKeyboard, buildSolarListKeyboard,
   getUserId, capitalize, formatPlanetTable, formatAspects,
 } from './bot';
 import { StateManager } from './state';
@@ -211,15 +213,7 @@ async function main() {
     const userId = getUserId(ctx);
     if (!userId) return;
     console.log(`[action] user=${userId} action=natal`);
-    const data = states.getData(userId);
-    if (data.birthDate) {
-      await calculateNatal(ctx, data, states, userId);
-    } else {
-      states.reset(userId);
-      states.setStep(userId, 'awaiting_birth_date');
-      states.setData(userId, { action: 'natal' });
-      ctx.reply('Введите дату рождения в формате ДД.ММ.ГГГГ\n\nНапример: 15.03.1990');
-    }
+    await showPersonSelector(ctx, userId, states, 'natal');
   });
 
   bot.action('solar', async (ctx: any) => {
@@ -227,17 +221,7 @@ async function main() {
     const userId = getUserId(ctx);
     if (!userId) return;
     console.log(`[action] user=${userId} action=solar`);
-    const data = states.getData(userId);
-    if (data.birthDate) {
-      states.setData(userId, { solarYear: new Date().getFullYear() });
-      states.setStep(userId, 'awaiting_solar_city');
-      ctx.reply('Где планируете встретить день рождения?\n\nНачните вводить город...');
-    } else {
-      states.reset(userId);
-      states.setStep(userId, 'awaiting_birth_date');
-      states.setData(userId, { action: 'solar' });
-      ctx.reply('Введите дату рождения в формате ДД.ММ.ГГГГ\n\nНапример: 15.03.1990');
-    }
+    await showPersonSelector(ctx, userId, states, 'solar');
   });
 
   bot.action('bestplace', async (ctx: any) => {
@@ -245,17 +229,7 @@ async function main() {
     const userId = getUserId(ctx);
     if (!userId) return;
     console.log(`[action] user=${userId} action=bestplace`);
-    const data = states.getData(userId);
-    if (data.birthDate) {
-      states.setData(userId, { action: 'bestplace' });
-      states.setStep(userId, 'awaiting_sphere');
-      ctx.reply('Что хотите улучшить?', { attachments: [sphereKeyboard] });
-    } else {
-      states.reset(userId);
-      states.setStep(userId, 'awaiting_birth_date');
-      states.setData(userId, { action: 'bestplace' });
-      ctx.reply('Введите дату рождения в формате ДД.ММ.ГГГГ\n\nНапример: 15.03.1990');
-    }
+    await showPersonSelector(ctx, userId, states, 'bestplace');
   });
 
   bot.action('solar_year', (ctx: any) => {
@@ -294,11 +268,89 @@ async function main() {
     await calculateBestPlace(ctx, states.getData(userId), states, userId);
   });
 
+  // ── Выбор персоны ──────────────────────────────
+  bot.action(/person:(.+)/, async (ctx: any) => {
+    ctx.answerOnCallback?.();
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    const personId = ctx.match[1];
+    console.log(`[action] user=${userId} person=${personId}`);
+    await handlePersonSelection(ctx, userId, states, personId);
+  });
+
   // ── Описание ─────────────────────────────────
   bot.action('description', async (ctx: any) => {
     ctx.answerOnCallback?.();
     const userId = getUserId(ctx);
     if (!userId) return;
+    const data = states.getData(userId);
+
+    // Проверяем наличие персоны и её расчётов
+    if (data.personId) {
+      const charts = await api.getCharts(data.personId);
+      const hasNatal = charts.some((c: any) => c.type === 'natal');
+      const hasSolar = charts.filter((c: any) => c.type === 'solar');
+
+      if (hasNatal && hasSolar.length > 0) {
+        // Есть оба типа — показываем выбор
+        states.setData(userId, { availableCharts: charts });
+        if (hasSolar.length === 1) {
+          // Один соляр — простой выбор
+          ctx.reply('Описание какой карты показать?', { attachments: [chartTypeKeyboard] });
+        } else {
+          // Несколько соляров — выбор конкретного
+          ctx.reply('Описание какой карты показать?', { attachments: [chartTypeKeyboard] });
+        }
+        return;
+      }
+    }
+
+    // Только натал или нет данных — показываем как раньше
+    if (!data.birthDate) {
+      ctx.reply('Сначала рассчитайте карту.', { attachments: [startKeyboard] });
+      return;
+    }
+    ctx.reply('Выберите тип описания:', { attachments: [descKeyboard] });
+  });
+
+  // Выбрана натальная карта для описания
+  bot.action('desc_natal', async (ctx: any) => {
+    ctx.answerOnCallback?.();
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    states.setData(userId, { descriptionType: 'natal' });
+    ctx.reply('Описание натальной карты:', { attachments: [descKeyboard] });
+  });
+
+  // Выбран соляр для описания
+  bot.action('desc_solar', async (ctx: any) => {
+    ctx.answerOnCallback?.();
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    const data = states.getData(userId);
+    const charts = (data.availableCharts || []).filter((c: any) => c.type === 'solar');
+
+    if (charts.length === 1) {
+      // Один соляр — сразу показываем меню описания
+      states.setData(userId, { descriptionType: 'solar', descriptionChartId: charts[0].id });
+      const params = charts[0].input_params || {};
+      ctx.reply(`Описание соляра ${params.year || ''} ${params.city || ''}:`, { attachments: [descKeyboard] });
+    } else if (charts.length > 1) {
+      // Несколько соляров — выбор конкретного
+      const keyboard = buildSolarListKeyboard(charts);
+      ctx.reply('Выберите соляр:', { attachments: [keyboard] });
+    } else {
+      ctx.reply('Соляр ещё не рассчитан.', { attachments: [startKeyboard] });
+    }
+  });
+
+  // Выбран конкретный соляр из списка
+  bot.action(/desc_solar_chart:(.+)/, async (ctx: any) => {
+    ctx.answerOnCallback?.();
+    const userId = getUserId(ctx);
+    if (!userId) return;
+    const chartId = ctx.match[1];
+    states.setData(userId, { descriptionType: 'solar', descriptionChartId: chartId });
     ctx.reply('Выберите тип описания:', { attachments: [descKeyboard] });
   });
 

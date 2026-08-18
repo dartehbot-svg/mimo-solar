@@ -245,6 +245,8 @@ async def api_solar_interpretations(req: SolarInterpretationRequest):
             natal, req.solar_year, req.solar_latitude, req.solar_longitude,
         )
 
+        overlay = overlay_solar_on_natal(solar, natal)
+
         if req.mode == "short":
             from .interpretation import generate_short_description
             text = generate_short_description(
@@ -258,6 +260,7 @@ async def api_solar_interpretations(req: SolarInterpretationRequest):
                 solar.planets, solar.houses.asc if solar.houses else 0,
                 solar.houses.mc if solar.houses else 0, solar.aspects,
                 chart_type="solar",
+                solar_overlay=overlay.solar_planets_in_natal_houses,
             )
             return {"mode": "full", "text": text, "year": req.solar_year}
     except Exception as e:
@@ -497,18 +500,48 @@ async def api_get_history(user_id: int, limit: int = 20):
 
 
 @app.get("/api/cities/search")
-async def api_search_cities(q: str = ""):
-    """Поиск городов по подстроке."""
+async def api_search_cities(q: str = "", list: str = "A"):
+    """Поиск городов по подстроке с фильтрацией по списку.
+
+    Списки:
+    A — натальная карта (tier 1+2+3+4, все города)
+    B — соляр полный (tier 1+2+3+4, все города)
+    C — соляр быстрый (tier 1+2, крупные города)
+    D — лучшее место (tier 3 отфильтрованные + tier 5)
+    """
     import json
     cities_path = Path(__file__).parent.parent / "data" / "cities.json"
     if not cities_path.exists():
         return []
     with open(cities_path, "r", encoding="utf-8") as f:
         cities = json.load(f)
+
+    # Фильтрация по списку
+    if list == "C":
+        cities = [c for c in cities if c.get("tier", 2) in (1, 2) and c.get("population", 0) >= 500000]
+    elif list == "D":
+        cities = [c for c in cities if (c.get("tier") == 3 and c.get("population", 0) >= 100000) or c.get("tier") == 5]
+    # A и B — все города
+
     if not q:
-        return cities
+        return cities[:50]
+
     q_lower = q.lower()
-    return [c for c in cities if q_lower in c["name"].lower() or q_lower in c["country"].lower()]
+    # Префиксный поиск (начинается с введённого текста)
+    prefix_matches = [c for c in cities if c["name"].lower().startswith(q_lower) or c.get("name_ru", "").lower().startswith(q_lower)]
+    # Поиск по подстроке
+    substring_matches = [c for c in cities if q_lower in c["name"].lower() or q_lower in c["country"].lower() or q_lower in c.get("name_ru", "").lower()]
+
+    # Объединяем, убирая дубли
+    seen = set()
+    result = []
+    for c in prefix_matches + substring_matches:
+        key = (c["name"], c["country"])
+        if key not in seen:
+            seen.add(key)
+            result.append(c)
+
+    return result[:10]
 
 
 # ── Персоны ─────────────────────────────────────────────────────

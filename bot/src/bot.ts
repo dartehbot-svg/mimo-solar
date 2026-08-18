@@ -35,6 +35,29 @@ export const natalResultKeyboard = Keyboard.inlineKeyboard([
   ],
 ]);
 
+// Выбор типа карты для описания (натал/соляр)
+export const chartTypeKeyboard = Keyboard.inlineKeyboard([
+  [
+    Keyboard.button.callback('Натальная карта', 'desc_natal'),
+    Keyboard.button.callback('Соляр', 'desc_solar'),
+  ],
+  [
+    Keyboard.button.callback('Назад', 'natal_back'),
+    Keyboard.button.callback('В начало', 'start_cmd'),
+  ],
+]);
+
+// Построить клавиатуру списка соляров
+export function buildSolarListKeyboard(solars: any[]) {
+  const buttons = solars.map((s: any) => {
+    const params = s.input_params || {};
+    const label = `Соляр ${params.year || '?'} ${params.city || ''}`;
+    return [Keyboard.button.callback(label, `desc_solar_chart:${s.id}`)];
+  });
+  buttons.push([Keyboard.button.callback('Назад', 'description'), Keyboard.button.callback('В начало', 'start_cmd')]);
+  return Keyboard.inlineKeyboard(buttons);
+}
+
 // Выбор типа описания
 export const descKeyboard = Keyboard.inlineKeyboard([
   [
@@ -549,6 +572,81 @@ export async function handleHistoryCommand(ctx: any, userId: number): Promise<vo
   ctx.reply(`Последние расчёты:\n\n${list}`);
 }
 
+// ── Выбор персоны ────────────────────────────────────────────────
+
+export async function showPersonSelector(ctx: any, userId: number, states: StateManager, action: string): Promise<void> {
+  const persons = await api.getPersons(userId);
+
+  if (persons.length === 0) {
+    // Нет сохранённых персон — обычный ввод данных
+    states.reset(userId);
+    states.setStep(userId, 'awaiting_birth_date');
+    states.setData(userId, { action });
+    ctx.reply('Введите дату рождения в формате ДД.ММ.ГГГГ\n\nНапример: 15.03.1990');
+    return;
+  }
+
+  // Есть персоны — показываем выбор
+  states.setData(userId, { action, pendingAction: action });
+  states.setStep(userId, 'awaiting_person_selection');
+
+  const buttons = persons.map((p: any) => {
+    const label = p.label + (p.birth_date ? ` (${p.birth_date})` : '');
+    return [Keyboard.button.callback(label, `person:${p.id}`)];
+  });
+  buttons.push([Keyboard.button.callback('+ Новый человек', 'person:new')]);
+
+  const keyboard = Keyboard.inlineKeyboard(buttons);
+  ctx.reply('Для кого рассчитать карту?', { attachments: [keyboard] });
+}
+
+export async function handlePersonSelection(ctx: any, userId: number, states: StateManager, personId: string): Promise<void> {
+  const data = states.getData(userId);
+  const action = data.pendingAction || data.action || 'natal';
+
+  if (personId === 'new') {
+    // Новый человек — стандартный ввод
+    states.reset(userId);
+    states.setStep(userId, 'awaiting_birth_date');
+    states.setData(userId, { action });
+    ctx.reply('Введите дату рождения в формате ДД.ММ.ГГГГ\n\nНапример: 15.03.1990');
+    return;
+  }
+
+  // Выбрана существующая персона
+  const person = await api.getPersons(userId).then((ps: any[]) => ps.find((p: any) => String(p.id) === personId));
+  if (!person || !person.birth_date) {
+    ctx.reply('Данные персоны неполны. Введите данные вручную:', { attachments: [startKeyboard] });
+    states.reset(userId);
+    return;
+  }
+
+  // Заполняем данные из персоны
+  states.setData(userId, {
+    birthDate: person.birth_date,
+    birthTime: person.birth_time || '12:00',
+    birthLat: person.latitude,
+    birthLon: person.longitude,
+    birthCity: person.birth_place || '',
+    personId: person.id,
+    personLabel: person.label,
+  });
+
+  if (action === 'natal') {
+    await calculateNatal(ctx, states.getData(userId), states, userId);
+  } else if (action === 'solar') {
+    states.setData(userId, { solarYear: new Date().getFullYear() });
+    states.setStep(userId, 'awaiting_solar_city');
+    ctx.reply(
+      `Данные: ${person.label}, ${person.birth_date}\n\n` +
+      'Где планируете встретить день рождения?\n\nНачните вводить город...'
+    );
+  } else if (action === 'bestplace') {
+    states.setStep(userId, 'awaiting_sphere');
+    ctx.reply('Что хотите улучшить?', { attachments: [sphereKeyboard] });
+  }
+}
+
 // ── Расчёты ──────────────────────────────────────────────────────
 
 export async function calculateNatal(ctx: any, data: Record<string, any>, states: StateManager, userId: number): Promise<void> {
@@ -575,7 +673,7 @@ export async function calculateNatal(ctx: any, data: Record<string, any>, states
     // Сохраняем в историю
     await api.addHistory(userId, 'natal', undefined, { birthDate: data.birthDate }, { planets: result.planets?.length });
 
-    // Сохраняем/обновляем профиль
+    // Сохраняем/обновляем профиль (обратная совместимость)
     const profiles = await api.getProfiles(userId);
     if (profiles.length === 0) {
       await api.createProfile({
@@ -586,6 +684,34 @@ export async function calculateNatal(ctx: any, data: Record<string, any>, states
         latitude: data.birthLat,
         longitude: data.birthLon,
         city_name: data.birthCity,
+      });
+    }
+
+    // Сохраняем персону, если ещё нет
+    let personId = data.personId;
+    if (!personId) {
+      const person = await api.createPerson({
+        user_id: userId,
+        label: data.personLabel || 'Я',
+        birth_date: data.birthDate,
+        birth_time: data.birthTime,
+        latitude: data.birthLat,
+        longitude: data.birthLon,
+        birth_place: data.birthCity,
+      });
+      if (person) {
+        personId = person.id;
+        states.setData(userId, { personId });
+      }
+    }
+
+    // Сохраняем расчёт в charts
+    if (personId) {
+      await api.saveChart({
+        person_id: personId,
+        type: 'natal',
+        input_params: { birth_date: data.birthDate, birth_time: data.birthTime },
+        result_data: { planets: result.planets?.length, asc: result.asc, mc: result.mc },
       });
     }
 
@@ -628,6 +754,17 @@ export async function calculateSolar(ctx: any, data: Record<string, any>, year: 
 
     await api.addHistory(userId, 'solar', undefined, { year, city: data.solarCity }, { planets: result.planets?.length });
 
+    // Сохраняем расчёт соляра в charts
+    if (data.personId) {
+      await api.saveChart({
+        person_id: data.personId,
+        type: 'solar',
+        input_params: { year, city: data.solarCity, latitude: data.solarLat, longitude: data.solarLon },
+        result_data: { planets: result.planets?.length, asc: result.asc, mc: result.mc, overlay: result.overlay },
+      });
+    }
+
+    states.setData(userId, { lastSolarResult: result, lastSolarYear: year, lastSolarCity: data.solarCity });
     states.setStep(userId, 'awaiting_action');
     ctx.reply(message, { attachments: [natalResultKeyboard] });
   } catch (err: any) {
@@ -700,6 +837,24 @@ const PLANET_NAMES_RU: Record<string, string> = {
   neptune: 'Нептун', pluto: 'Плутон',
 };
 
+// Генерация имени файла
+export function buildFilename(chartType: string, personName: string, dateOrPeriod: string, ext: string = 'pdf'): string {
+  const typeNames: Record<string, string> = {
+    natal: 'Натальная карта',
+    solar: 'Соляр',
+    chart: 'Колесо натальной карты',
+    solar_chart: 'Колесо соляра',
+  };
+  const typeName = typeNames[chartType] || chartType;
+  const name = (personName || '').replace(/[/\\:*?"<>|]/g, ' ').trim();
+  const date = (dateOrPeriod || '').replace(/[/\\:*?"<>|]/g, ' ').trim();
+  let filename = `${typeName} ${name} ${date}.${ext}`.replace(/\s+/g, ' ').trim();
+  if (filename.length > 100) {
+    filename = filename.slice(0, 96) + '.' + ext;
+  }
+  return filename;
+}
+
 export async function showShortDescription(ctx: any, data: Record<string, any>, userId: number): Promise<void> {
   try {
     const result = await api.getInterpretations({
@@ -746,6 +901,8 @@ export async function downloadFullDescription(ctx: any, data: Record<string, any
     const text = result.text || 'Не удалось сгенерировать описание.';
     const header = `Натальная карта\nДата: ${data.birthDate} ${data.birthTime}\nГород: ${data.birthCity || ''}\n\n`;
     const fullText = header + text;
+    const personName = data.personLabel || '';
+    const filename = buildFilename('natal', personName, data.birthDate, 'pdf');
 
     // Генерируем PDF через Core API
     try {
@@ -763,13 +920,14 @@ export async function downloadFullDescription(ctx: any, data: Record<string, any
         { responseType: 'arraybuffer' }
       );
       const buffer = Buffer.from(pdfResponse.data);
-      const file = await ctx.api.uploadFile({ source: buffer, filename: `natal_${data.birthDate}.pdf` });
+      const file = await ctx.api.uploadFile({ source: buffer, filename });
       await ctx.reply('PDF с полным описанием:', { attachments: [file.toJson()] });
     } catch {
       // Fallback — если PDF не сгенерировался, отправляем текст
+      const txtFilename = buildFilename('natal', personName, data.birthDate, 'txt');
       const buffer = Buffer.from(fullText, 'utf-8');
       try {
-        const file = await ctx.api.uploadFile({ source: buffer, filename: `natal_${data.birthDate}.txt` });
+        const file = await ctx.api.uploadFile({ source: buffer, filename: txtFilename });
         await ctx.reply('Файл с описанием:', { attachments: [file.toJson()] });
       } catch {
         await ctx.reply(fullText, { attachments: [natalResultKeyboard] });

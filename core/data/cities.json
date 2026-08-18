@@ -9,7 +9,10 @@
     "tags": [
       "russia",
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 12600000,
+    "name_ru": "Москва"
   },
   {
     "name": "Санкт-Петербург",
@@ -21,7 +24,10 @@
     "tags": [
       "russia",
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 5400000,
+    "name_ru": "Санкт-Петербург"
   },
   {
     "name": "Сочи",
@@ -34,7 +40,10 @@
       "russia",
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Сочи"
   },
   {
     "name": "Казань",
@@ -46,7 +55,10 @@
     "tags": [
       "russia",
       "europe"
-    ]
+    ],
+    "tier": 3,
+    "population": 1100000,
+    "name_ru": "Казань"
   },
   {
     "name": "Екатеринбург",
@@ -58,7 +70,10 @@
     "tags": [
       "russia",
       "asia"
-    ]
+    ],
+    "tier": 3,
+    "population": 1500000,
+    "name_ru": "Екатеринбург"
   },
   {
     "name": "Новосибирск",
@@ -70,7 +85,10 @@
     "tags": [
       "russia",
       "asia"
-    ]
+    ],
+    "tier": 3,
+    "population": 1500000,
+    "name_ru": "Новосибирск"
   },
   {
     "name": "Калининград",
@@ -82,7 +100,10 @@
     "tags": [
       "russia",
       "europe"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Калининград"
   },
   {
     "name": "Стамбул",
@@ -95,7 +116,10 @@
       "europe",
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Стамбул"
   },
   {
     "name": "Анталья",
@@ -107,7 +131,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Анталья"
   },
   {
     "name": "Аланья",
@@ -119,7 +146,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Аланья"
   },
   {
     "name": "Дубай",
@@ -131,7 +161,10 @@
     "tags": [
       "asia",
       "luxury"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Дубай"
   },
   {
     "name": "Абу-Даби",
@@ -143,7 +176,10 @@
     "tags": [
       "asia",
       "luxury"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Абу-Даби"
   },
   {
     "name": "Бангкок",
@@ -155,7 +191,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Бангкок"
   },
   {
     "name": "Пхукет",
@@ -167,7 +206,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Пхукет"
   },
   {
     "name": "Паттайя",
@@ -179,7 +221,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Паттайя"
   },
   {
     "name": "Бали (Денпасар)",
@@ -191,7 +236,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Бали (Денпасар)"
   },
   {
     "name": "Ханой",
@@ -202,7 +250,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Ханой"
   },
   {
     "name": "Дананг",
@@ -214,7 +265,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Дананг"
   },
   {
     "name": "Пномпень",
@@ -225,7 +279,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Пномпень"
   },
   {
     "name": "Коломбо",
@@ -237,7 +294,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Коломбо"
   },
   {
     "name": "Мале",
@@ -250,7 +310,10 @@
       "asia",
       "resort",
       "luxury"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Мале"
   },
   {
     "name": "Белград",
@@ -261,7 +324,10 @@
     "visa_free_russia": true,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Белград"
   },
   {
     "name": "Подгорица",
@@ -273,7 +339,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Подгорица"
   },
   {
     "name": "Будва",
@@ -285,7 +354,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Будва"
   },
   {
     "name": "Тбилиси",
@@ -297,7 +369,10 @@
     "tags": [
       "europe",
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Тбилиси"
   },
   {
     "name": "Батуми",
@@ -309,7 +384,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 4,
+    "population": 500000,
+    "name_ru": "Батуми"
   },
   {
     "name": "Ереван",
@@ -321,7 +399,10 @@
     "tags": [
       "europe",
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Ереван"
   },
   {
     "name": "Баку",
@@ -333,7 +414,10 @@
     "tags": [
       "europe",
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Баку"
   },
   {
     "name": "Ташкент",
@@ -344,7 +428,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Ташкент"
   },
   {
     "name": "Алматы",
@@ -355,7 +442,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 4,
+    "population": 500000,
+    "name_ru": "Алматы"
   },
   {
     "name": "Астана",
@@ -366,7 +456,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Астана"
   },
   {
     "name": "Бишкек",
@@ -377,7 +470,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Бишкек"
   },
   {
     "name": "Париж",
@@ -388,7 +484,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 8000000,
+    "name_ru": "Париж"
   },
   {
     "name": "Лондон",
@@ -399,7 +498,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 8000000,
+    "name_ru": "Лондон"
   },
   {
     "name": "Рим",
@@ -410,7 +512,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Рим"
   },
   {
     "name": "Барселона",
@@ -422,7 +527,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Барселона"
   },
   {
     "name": "Берлин",
@@ -433,7 +541,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 8000000,
+    "name_ru": "Берлин"
   },
   {
     "name": "Прага",
@@ -444,7 +555,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Прага"
   },
   {
     "name": "Вена",
@@ -455,7 +569,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Вена"
   },
   {
     "name": "Амстердам",
@@ -466,7 +583,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Амстердам"
   },
   {
     "name": "Нью-Йорк",
@@ -477,7 +597,10 @@
     "visa_free_russia": false,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 2,
+    "population": 8000000,
+    "name_ru": "Нью-Йорк"
   },
   {
     "name": "Майами",
@@ -489,7 +612,10 @@
     "tags": [
       "america",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Майами"
   },
   {
     "name": "Лос-Анджелес",
@@ -500,7 +626,10 @@
     "visa_free_russia": false,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Лос-Анджелес"
   },
   {
     "name": "Канкун",
@@ -512,7 +641,10 @@
     "tags": [
       "america",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Канкун"
   },
   {
     "name": "Гавана",
@@ -524,7 +656,10 @@
     "tags": [
       "america",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Гавана"
   },
   {
     "name": "Каир",
@@ -536,7 +671,10 @@
     "tags": [
       "africa",
       "resort"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Каир"
   },
   {
     "name": "Хургада",
@@ -548,7 +686,10 @@
     "tags": [
       "africa",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Хургада"
   },
   {
     "name": "Шарм-эль-Шейх",
@@ -560,7 +701,10 @@
     "tags": [
       "africa",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Шарм-эль-Шейх"
   },
   {
     "name": "Измир",
@@ -572,7 +716,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Измир"
   },
   {
     "name": "Бодрум",
@@ -584,7 +731,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Бодрум"
   },
   {
     "name": "Токио",
@@ -595,7 +745,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 8000000,
+    "name_ru": "Токио"
   },
   {
     "name": "Сеул",
@@ -606,7 +759,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Сеул"
   },
   {
     "name": "Пекин",
@@ -617,7 +773,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 8000000,
+    "name_ru": "Пекин"
   },
   {
     "name": "Шанхай",
@@ -628,7 +787,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Шанхай"
   },
   {
     "name": "Дели",
@@ -639,7 +801,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Дели"
   },
   {
     "name": "Гоа",
@@ -651,7 +816,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Гоа"
   },
   {
     "name": "Мехико",
@@ -662,7 +830,10 @@
     "visa_free_russia": true,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Мехико"
   },
   {
     "name": "Буэнос-Айрес",
@@ -673,7 +844,10 @@
     "visa_free_russia": false,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Буэнос-Айрес"
   },
   {
     "name": "Рио-де-Жанейро",
@@ -685,7 +859,10 @@
     "tags": [
       "america",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Рио-де-Жанейро"
   },
   {
     "name": "Кейптаун",
@@ -696,7 +873,10 @@
     "visa_free_russia": false,
     "tags": [
       "africa"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Кейптаун"
   },
   {
     "name": "Марракеш",
@@ -707,7 +887,10 @@
     "visa_free_russia": true,
     "tags": [
       "africa"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Марракеш"
   },
   {
     "name": "Тель-Авив",
@@ -719,7 +902,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Тель-Авив"
   },
   {
     "name": "Доха",
@@ -731,7 +917,10 @@
     "tags": [
       "asia",
       "luxury"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Доха"
   },
   {
     "name": "Куала-Лумпур",
@@ -742,7 +931,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Куала-Лумпур"
   },
   {
     "name": "Сингапур",
@@ -754,7 +946,10 @@
     "tags": [
       "asia",
       "luxury"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Сингапур"
   },
   {
     "name": "Гонконг",
@@ -765,7 +960,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Гонконг"
   },
   {
     "name": "Манила",
@@ -777,7 +975,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Манила"
   },
   {
     "name": "Катманду",
@@ -788,7 +989,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Катманду"
   },
   {
     "name": "Улан-Батор",
@@ -799,7 +1003,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Улан-Батор"
   },
   {
     "name": "Хельсинки",
@@ -810,7 +1017,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Хельсинки"
   },
   {
     "name": "Таллин",
@@ -821,7 +1031,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Таллин"
   },
   {
     "name": "Рига",
@@ -832,7 +1045,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Рига"
   },
   {
     "name": "Вильнюс",
@@ -843,7 +1059,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Вильнюс"
   },
   {
     "name": "Варшава",
@@ -854,7 +1073,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Варшава"
   },
   {
     "name": "Будапешт",
@@ -865,7 +1087,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Будапешт"
   },
   {
     "name": "Владивосток",
@@ -877,7 +1102,10 @@
     "tags": [
       "russia",
       "asia"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Владивосток"
   },
   {
     "name": "Красноярск",
@@ -889,7 +1117,10 @@
     "tags": [
       "russia",
       "asia"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Красноярск"
   },
   {
     "name": "Иркутск",
@@ -901,7 +1132,10 @@
     "tags": [
       "russia",
       "asia"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Иркутск"
   },
   {
     "name": "Краснодар",
@@ -913,7 +1147,10 @@
     "tags": [
       "russia",
       "europe"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Краснодар"
   },
   {
     "name": "Нижний Новгород",
@@ -925,7 +1162,10 @@
     "tags": [
       "russia",
       "europe"
-    ]
+    ],
+    "tier": 3,
+    "population": 1100000,
+    "name_ru": "Нижний Новгород"
   },
   {
     "name": "Самара",
@@ -937,7 +1177,10 @@
     "tags": [
       "russia",
       "europe"
-    ]
+    ],
+    "tier": 3,
+    "population": 1100000,
+    "name_ru": "Самара"
   },
   {
     "name": "Ростов-на-Дону",
@@ -949,7 +1192,10 @@
     "tags": [
       "russia",
       "europe"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Ростов-на-Дону"
   },
   {
     "name": "Уфа",
@@ -961,7 +1207,10 @@
     "tags": [
       "russia",
       "europe"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Уфа"
   },
   {
     "name": "Пермь",
@@ -973,7 +1222,10 @@
     "tags": [
       "russia",
       "europe"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Пермь"
   },
   {
     "name": "Воронеж",
@@ -985,7 +1237,10 @@
     "tags": [
       "russia",
       "europe"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Воронеж"
   },
   {
     "name": "Липецк",
@@ -997,7 +1252,10 @@
     "tags": [
       "russia",
       "europe"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Липецк"
   },
   {
     "name": "Тюмень",
@@ -1009,7 +1267,10 @@
     "tags": [
       "russia",
       "asia"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Тюмень"
   },
   {
     "name": "Омск",
@@ -1021,7 +1282,10 @@
     "tags": [
       "russia",
       "asia"
-    ]
+    ],
+    "tier": 3,
+    "population": 1100000,
+    "name_ru": "Омск"
   },
   {
     "name": "Казбек",
@@ -1034,7 +1298,10 @@
       "russia",
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 3,
+    "population": 300000,
+    "name_ru": "Казбек"
   },
   {
     "name": "Кемер",
@@ -1046,7 +1313,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Кемер"
   },
   {
     "name": "Мармарис",
@@ -1058,7 +1328,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Мармарис"
   },
   {
     "name": "Фетхие",
@@ -1070,7 +1343,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Фетхие"
   },
   {
     "name": "Чиангмай",
@@ -1081,7 +1357,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Чиангмай"
   },
   {
     "name": "Краби",
@@ -1093,7 +1372,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Краби"
   },
   {
     "name": "Самуи",
@@ -1105,7 +1387,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Самуи"
   },
   {
     "name": "Хошимин",
@@ -1116,7 +1401,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Хошимин"
   },
   {
     "name": "Нячанг",
@@ -1128,7 +1416,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Нячанг"
   },
   {
     "name": "Фукуок",
@@ -1140,7 +1431,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Фукуок"
   },
   {
     "name": "Джакарта",
@@ -1151,7 +1445,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Джакарта"
   },
   {
     "name": "Йогьякарта",
@@ -1162,7 +1459,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Йогьякарта"
   },
   {
     "name": "Пенанг",
@@ -1174,7 +1474,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Пенанг"
   },
   {
     "name": "Лангкави",
@@ -1186,7 +1489,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Лангкави"
   },
   {
     "name": "Гуанчжоу",
@@ -1197,7 +1503,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Гуанчжоу"
   },
   {
     "name": "Шэньчжэнь",
@@ -1208,7 +1517,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Шэньчжэнь"
   },
   {
     "name": "Хайнань",
@@ -1220,7 +1532,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Хайнань"
   },
   {
     "name": "Харбин",
@@ -1231,7 +1546,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Харбин"
   },
   {
     "name": "Осака",
@@ -1242,7 +1560,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Осака"
   },
   {
     "name": "Киото",
@@ -1253,7 +1574,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Киото"
   },
   {
     "name": "Пусан",
@@ -1265,7 +1589,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Пусан"
   },
   {
     "name": "Мумбаи",
@@ -1276,7 +1603,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Мумбаи"
   },
   {
     "name": "Джайпур",
@@ -1287,7 +1617,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Джайпур"
   },
   {
     "name": "Агра",
@@ -1298,7 +1631,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Агра"
   },
   {
     "name": "Кочин",
@@ -1310,7 +1646,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Кочин"
   },
   {
     "name": "Маскат",
@@ -1322,7 +1661,10 @@
     "tags": [
       "asia",
       "luxury"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Маскат"
   },
   {
     "name": "Амман",
@@ -1333,7 +1675,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Амман"
   },
   {
     "name": "Эр-Рияд",
@@ -1344,7 +1689,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Эр-Рияд"
   },
   {
     "name": "Манама",
@@ -1355,7 +1703,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Манама"
   },
   {
     "name": "Вьентьян",
@@ -1366,7 +1717,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Вьентьян"
   },
   {
     "name": "Луангпхабанг",
@@ -1377,7 +1731,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Луангпхабанг"
   },
   {
     "name": "Янгон",
@@ -1388,7 +1745,10 @@
     "visa_free_russia": true,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Янгон"
   },
   {
     "name": "Покхара",
@@ -1400,7 +1760,10 @@
     "tags": [
       "asia",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Покхара"
   },
   {
     "name": "Тайбэй",
@@ -1411,7 +1774,10 @@
     "visa_free_russia": false,
     "tags": [
       "asia"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Тайбэй"
   },
   {
     "name": "Мадрид",
@@ -1422,7 +1788,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Мадрид"
   },
   {
     "name": "Милан",
@@ -1433,7 +1802,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Милан"
   },
   {
     "name": "Флоренция",
@@ -1444,7 +1816,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Флоренция"
   },
   {
     "name": "Неаполь",
@@ -1455,7 +1830,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Неаполь"
   },
   {
     "name": "Венеция",
@@ -1466,7 +1844,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Венеция"
   },
   {
     "name": "Лиссабон",
@@ -1477,7 +1858,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Лиссабон"
   },
   {
     "name": "Дубровник",
@@ -1489,7 +1873,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Дубровник"
   },
   {
     "name": "Афины",
@@ -1500,7 +1887,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Афины"
   },
   {
     "name": "Санторини",
@@ -1512,7 +1902,10 @@
     "tags": [
       "europe",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Санторини"
   },
   {
     "name": "Копенгаген",
@@ -1523,7 +1916,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Копенгаген"
   },
   {
     "name": "Стокгольм",
@@ -1534,7 +1930,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Стокгольм"
   },
   {
     "name": "Осло",
@@ -1545,7 +1944,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Осло"
   },
   {
     "name": "Цюрих",
@@ -1556,7 +1958,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Цюрих"
   },
   {
     "name": "Мюнхен",
@@ -1567,7 +1972,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Мюнхен"
   },
   {
     "name": "Краков",
@@ -1578,7 +1986,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Краков"
   },
   {
     "name": "Братислава",
@@ -1589,7 +2000,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Братислава"
   },
   {
     "name": "Бухарест",
@@ -1600,7 +2014,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Бухарест"
   },
   {
     "name": "София",
@@ -1611,7 +2028,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "София"
   },
   {
     "name": "Загреб",
@@ -1622,7 +2042,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Загреб"
   },
   {
     "name": "Любляна",
@@ -1633,7 +2056,10 @@
     "visa_free_russia": false,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Любляна"
   },
   {
     "name": "Сараево",
@@ -1644,7 +2070,10 @@
     "visa_free_russia": true,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Сараево"
   },
   {
     "name": "Скопье",
@@ -1655,7 +2084,10 @@
     "visa_free_russia": true,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Скопье"
   },
   {
     "name": "Тирана",
@@ -1666,7 +2098,10 @@
     "visa_free_russia": true,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Тирана"
   },
   {
     "name": "Кишинёв",
@@ -1677,7 +2112,10 @@
     "visa_free_russia": true,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Кишинёв"
   },
   {
     "name": "Минск",
@@ -1688,7 +2126,10 @@
     "visa_free_russia": true,
     "tags": [
       "europe"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Минск"
   },
   {
     "name": "Сан-Паулу",
@@ -1699,7 +2140,10 @@
     "visa_free_russia": false,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Сан-Паулу"
   },
   {
     "name": "Лима",
@@ -1710,7 +2154,10 @@
     "visa_free_russia": true,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Лима"
   },
   {
     "name": "Богота",
@@ -1721,7 +2168,10 @@
     "visa_free_russia": true,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Богота"
   },
   {
     "name": "Медельин",
@@ -1732,7 +2182,10 @@
     "visa_free_russia": true,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Медельин"
   },
   {
     "name": "Санто-Доминго",
@@ -1744,7 +2197,10 @@
     "tags": [
       "america",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Санто-Доминго"
   },
   {
     "name": "Пунта-Кана",
@@ -1756,7 +2212,10 @@
     "tags": [
       "america",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Пунта-Кана"
   },
   {
     "name": "Сан-Хосе",
@@ -1767,7 +2226,10 @@
     "visa_free_russia": true,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Сан-Хосе"
   },
   {
     "name": "Панама",
@@ -1778,7 +2240,10 @@
     "visa_free_russia": true,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Панама"
   },
   {
     "name": "Каракас",
@@ -1789,7 +2254,10 @@
     "visa_free_russia": true,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Каракас"
   },
   {
     "name": "Монтевидео",
@@ -1800,7 +2268,10 @@
     "visa_free_russia": true,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Монтевидео"
   },
   {
     "name": "Сантьяго",
@@ -1811,7 +2282,10 @@
     "visa_free_russia": false,
     "tags": [
       "america"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Сантьяго"
   },
   {
     "name": "Тунис",
@@ -1823,7 +2297,10 @@
     "tags": [
       "africa",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Тунис"
   },
   {
     "name": "Эль-Гуна",
@@ -1835,7 +2312,10 @@
     "tags": [
       "africa",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Эль-Гуна"
   },
   {
     "name": "Дахаб",
@@ -1847,7 +2327,10 @@
     "tags": [
       "africa",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Дахаб"
   },
   {
     "name": "Найроби",
@@ -1858,7 +2341,10 @@
     "visa_free_russia": true,
     "tags": [
       "africa"
-    ]
+    ],
+    "tier": 1,
+    "population": 2000000,
+    "name_ru": "Найроби"
   },
   {
     "name": "Занзибар",
@@ -1870,7 +2356,10 @@
     "tags": [
       "africa",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Занзибар"
   },
   {
     "name": "Дар-эс-Салам",
@@ -1881,7 +2370,10 @@
     "visa_free_russia": true,
     "tags": [
       "africa"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Дар-эс-Салам"
   },
   {
     "name": "Касабланка",
@@ -1892,7 +2384,10 @@
     "visa_free_russia": true,
     "tags": [
       "africa"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Касабланка"
   },
   {
     "name": "Нади",
@@ -1904,7 +2399,10 @@
     "tags": [
       "oceania",
       "resort"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Нади"
   },
   {
     "name": "Сидней",
@@ -1915,7 +2413,10 @@
     "visa_free_russia": false,
     "tags": [
       "oceania"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Сидней"
   },
   {
     "name": "Окленд",
@@ -1926,6 +2427,1115 @@
     "visa_free_russia": false,
     "tags": [
       "oceania"
-    ]
+    ],
+    "tier": 2,
+    "population": 500000,
+    "name_ru": "Окленд"
+  },
+  {
+    "name": "Ярославль",
+    "name_ru": "Ярославль",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Тамбов",
+    "name_ru": "Тамбов",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Братск",
+    "name_ru": "Братск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Челябинск",
+    "name_ru": "Челябинск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Набережные Челны",
+    "name_ru": "Набережные Челны",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Киров",
+    "name_ru": "Киров",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Мурманск",
+    "name_ru": "Мурманск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Энгельс",
+    "name_ru": "Энгельс",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Череповец",
+    "name_ru": "Череповец",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Грозный",
+    "name_ru": "Грозный",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Кострома",
+    "name_ru": "Кострома",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Петрозаводск",
+    "name_ru": "Петрозаводск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Сургут",
+    "name_ru": "Сургут",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Комсомольск-на-Амуре",
+    "name_ru": "Комсомольск-на-Амуре",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Балаково",
+    "name_ru": "Балаково",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Тула",
+    "name_ru": "Тула",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Сызрань",
+    "name_ru": "Сызрань",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Владимир",
+    "name_ru": "Владимир",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Чебоксары",
+    "name_ru": "Чебоксары",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Курск",
+    "name_ru": "Курск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Дзержинск",
+    "name_ru": "Дзержинск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Кемерово",
+    "name_ru": "Кемерово",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Новороссийск",
+    "name_ru": "Новороссийск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Ангарск",
+    "name_ru": "Ангарск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Абакан",
+    "name_ru": "Абакан",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Томск",
+    "name_ru": "Томск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Салават",
+    "name_ru": "Салават",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Волгоград",
+    "name_ru": "Волгоград",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Сыктывкар",
+    "name_ru": "Сыктывкар",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Тверь",
+    "name_ru": "Тверь",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Королёв",
+    "name_ru": "Королёв",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Уссурийск",
+    "name_ru": "Уссурийск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Нижневартовск",
+    "name_ru": "Нижневартовск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Электросталь",
+    "name_ru": "Электросталь",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Каменск-Уральский",
+    "name_ru": "Каменск-Уральский",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Таганрог",
+    "name_ru": "Таганрог",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Благовещенск",
+    "name_ru": "Благовещенск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Норильск",
+    "name_ru": "Норильск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Йошкар-Ола",
+    "name_ru": "Йошкар-Ола",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Пенза",
+    "name_ru": "Пенза",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Рыбинск",
+    "name_ru": "Рыбинск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Смоленск",
+    "name_ru": "Смоленск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Тольятти",
+    "name_ru": "Тольятти",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Нижнекамск",
+    "name_ru": "Нижнекамск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Старый Оскол",
+    "name_ru": "Старый Оскол",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Хабаровск",
+    "name_ru": "Хабаровск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Калуга",
+    "name_ru": "Калуга",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Орёл",
+    "name_ru": "Орёл",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Барнаул",
+    "name_ru": "Барнаул",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Иваново",
+    "name_ru": "Иваново",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Бийск",
+    "name_ru": "Бийск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Ульяновск",
+    "name_ru": "Ульяновск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Орск",
+    "name_ru": "Орск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Ставрополь",
+    "name_ru": "Ставрополь",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Находка",
+    "name_ru": "Находка",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Стерлитамак",
+    "name_ru": "Стерлитамак",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Новокузнецк",
+    "name_ru": "Новокузнецк",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Северодвинск",
+    "name_ru": "Северодвинск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Волжский",
+    "name_ru": "Волжский",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Подольск",
+    "name_ru": "Подольск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Чита",
+    "name_ru": "Чита",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Миасс",
+    "name_ru": "Миасс",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Магнитогорск",
+    "name_ru": "Магнитогорск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Рязань",
+    "name_ru": "Рязань",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Южно-Сахалинск",
+    "name_ru": "Южно-Сахалинск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Псков",
+    "name_ru": "Псков",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Брянск",
+    "name_ru": "Брянск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Саратов",
+    "name_ru": "Саратов",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Махачкала",
+    "name_ru": "Махачкала",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Златоуст",
+    "name_ru": "Златоуст",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Архангельск",
+    "name_ru": "Архангельск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Армавир",
+    "name_ru": "Армавир",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Оренбург",
+    "name_ru": "Оренбург",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Ижевск",
+    "name_ru": "Ижевск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Нижний Тагил",
+    "name_ru": "Нижний Тагил",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Астрахань",
+    "name_ru": "Астрахань",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Саранск",
+    "name_ru": "Саранск",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Петропавловск-Камчатский",
+    "name_ru": "Петропавловск-Камчатский",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
+  },
+  {
+    "name": "Вологда",
+    "name_ru": "Вологда",
+    "country": "Россия",
+    "lat": 55.0,
+    "lon": 37.0,
+    "timezone": "Europe/Moscow",
+    "visa_free_russia": true,
+    "tags": [
+      "russia"
+    ],
+    "tier": 3,
+    "population": 300000
   }
 ]

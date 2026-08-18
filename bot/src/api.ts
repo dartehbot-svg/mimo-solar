@@ -90,9 +90,9 @@ export async function getHistory(userId: number, limit = 10) {
 
 // ── Города ───────────────────────────────────────────────────────
 
-export async function searchCities(query: string) {
+export async function searchCities(query: string, list: string = 'A') {
   try {
-    const res = await axios.get(`${CORE_API}/api/cities/search`, { params: { q: query } });
+    const res = await axios.get(`${CORE_API}/api/cities/search`, { params: { q: query, list } });
     return res.data;
   } catch {
     return [];
@@ -208,6 +208,18 @@ export async function saveChart(data: {
   } catch (err: any) {
     console.warn('[api] saveChart error:', err.message);
     return null;
+  }
+}
+
+export async function getCharts(personId: number, type?: string) {
+  try {
+    const url = type
+      ? `${CORE_API}/api/persons/${personId}/charts?type=${type}`
+      : `${CORE_API}/api/persons/${personId}/charts`;
+    const res = await axios.get(url);
+    return res.data;
+  } catch {
+    return [];
   }
 }
 
